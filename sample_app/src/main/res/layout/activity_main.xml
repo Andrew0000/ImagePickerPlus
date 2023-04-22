@@ -5,18 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    tools:ignore="ContentDescription, UseCompoundDrawables" >
+    tools:ignore="ContentDescription, UseCompoundDrawables, HardcodedText" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:orientation="vertical"
         android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnGallery"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World!" />
+            android:layout_marginBottom="8dp"
+            android:text="Gallery" />
+
+        <Button
+            android:id="@+id/btnCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Camera" />
 
         <ImageView
             android:id="@+id/imageView1"
