@@ -6,6 +6,8 @@ import android.content.Intent
 import android.net.Uri
 import crocodile8.image_picker_plus.utils.Logger
 
+// https://developer.android.com/training/data-storage/shared/documents-files#bitmap
+
 class GalleryPicker(
     private val context: Context,
 ) {
