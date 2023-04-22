@@ -3,6 +3,7 @@ package crocodile8.image_picker_plus
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import crocodile8.image_picker_plus.utils.Logger
 
 class GalleryPicker(
@@ -18,6 +19,12 @@ class GalleryPicker(
             Logger.e("GalleryPicker intent resolveActivity error")
             //TODO show error
         }
+    }
+
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Uri? {
+        val uri = data?.data
+        Logger.i("uri: $uri")
+        return uri
     }
 
     private fun createPickIntent(mimeTypes: List<String>): Intent {
