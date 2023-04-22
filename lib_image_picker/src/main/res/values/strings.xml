@@ -1,0 +1,6 @@
+<resources>
+
+    <!-- Must be the same as in Manifest -->
+    <string name="file_provider_name" translatable="false">.file_provider</string>
+
+</resources>

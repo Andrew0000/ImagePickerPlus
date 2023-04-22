@@ -15,6 +15,7 @@ class ImagePickerPlusActivity : AppCompatActivity() {
     }
 
     private val galleryPicker by lazy { GalleryPicker(applicationContext) }
+    private val cameraPicker by lazy { CameraPicker(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +25,7 @@ class ImagePickerPlusActivity : AppCompatActivity() {
                 galleryPicker.launch(this, request)
             }
             PickSource.CAMERA -> {
-                //TODO
+                cameraPicker.launch(this, request)
             }
         }
     }
@@ -39,7 +40,8 @@ class ImagePickerPlusActivity : AppCompatActivity() {
                 setResultOK(uri)
             }
             PickSource.CAMERA -> {
-                //TODO
+                val uri = cameraPicker.onActivityResult(requestCode, resultCode, data)
+                setResultOK(uri)
             }
         }
     }

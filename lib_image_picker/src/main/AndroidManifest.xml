@@ -3,9 +3,21 @@
 
     <application>
 
-    <activity
-        android:name=".ImagePickerPlusActivity"
-        android:theme="@style/ImagePickerPlus.Transparent" />
+        <activity
+            android:name=".ImagePickerPlusActivity"
+            android:theme="@style/ImagePickerPlus.Transparent" />
+
+        <provider
+            android:name="crocodile8.image_picker_plus.ImagePickerPlusFileProvider"
+            android:authorities="${applicationId}.file_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+
+        </provider>
 
     </application>
 
