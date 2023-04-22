@@ -14,34 +14,27 @@ class ImagePickerPlusActivity : AppCompatActivity() {
         intent?.getSerializableExtra(REQUEST_SPEC) as PickRequest
     }
 
-    private val galleryPicker by lazy { GalleryPicker(applicationContext) }
-    private val cameraPicker by lazy { CameraPicker(applicationContext) }
+    private val galleryPicker by lazy {
+        GalleryPicker(this) {
+            setResultOK(it)
+        }
+    }
+
+    private val cameraPicker by lazy {
+        CameraPicker(this) {
+            setResultOK(it)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Logger.i("ImagePickerPlusActivity onCreate request: $request")
         when (request.source) {
             PickSource.GALLERY -> {
-                galleryPicker.launch(this, request)
+                galleryPicker.launch(request)
             }
             PickSource.CAMERA -> {
-                cameraPicker.launch(this, request)
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Logger.i("ImagePickerPlusActivity onActivityResult " +
-                "requestCode: $requestCode, resultCode: $resultCode, data: $data")
-        when (request.source) {
-            PickSource.GALLERY -> {
-                val uri = galleryPicker.onActivityResult(requestCode, resultCode, data)
-                setResultOK(uri)
-            }
-            PickSource.CAMERA -> {
-                val uri = cameraPicker.onActivityResult(requestCode, resultCode, data)
-                setResultOK(uri)
+                cameraPicker.launch(request)
             }
         }
     }

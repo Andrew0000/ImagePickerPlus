@@ -1,32 +1,39 @@
 package crocodile8.image_picker_plus
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.ComponentActivity
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import crocodile8.image_picker_plus.utils.Logger
 
 // https://developer.android.com/training/data-storage/shared/documents-files#bitmap
 
 class GalleryPicker(
-    private val context: Context,
+    private val activity: ComponentActivity,
+    private val onResult: (Uri) -> Unit,
 ) {
 
-    fun launch(activity: Activity, request: PickRequest) {
-        val intent = createPickIntent(request.mimeTypes)
-        if (intent.resolveActivity(context.packageManager) != null) {
-            Logger.i("GalleryPicker intent resolveActivity OK")
-            activity.startActivityForResult(intent, REQUEST_CODE)
+    private val launcher = activity.registerForActivityResult(StartActivityForResult()) {
+        val uri = it.data?.data
+        Logger.i("uri: $uri")
+        if (it.resultCode == Activity.RESULT_OK && uri != null) {
+            onResult(uri)
         } else {
-            Logger.e("GalleryPicker intent resolveActivity error")
+            Logger.e("GalleryPicker result error: ${it.resultCode}, uri: $uri")
             //TODO show error
         }
     }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Uri? {
-        val uri = data?.data
-        Logger.i("uri: $uri")
-        return uri
+    fun launch(request: PickRequest) {
+        val intent = createPickIntent(request.mimeTypes)
+        if (intent.resolveActivity(activity.packageManager) != null) {
+            Logger.i("GalleryPicker intent resolveActivity OK")
+            launcher.launch(intent)
+        } else {
+            Logger.e("GalleryPicker intent resolveActivity error")
+            //TODO show error
+        }
     }
 
     private fun createPickIntent(mimeTypes: List<String>): Intent {
@@ -42,10 +49,5 @@ class GalleryPicker(
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
         return intent
-    }
-
-    companion object {
-
-        const val REQUEST_CODE = 802
     }
 }
