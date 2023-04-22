@@ -1,4 +1,4 @@
-package crocodile8.lib_image_picker
+package crocodile8.image_picker_plus
 
 import org.junit.Test
 

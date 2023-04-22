@@ -1,4 +1,4 @@
-package crocodile8.lib_image_picker
+package crocodile8.image_picker_plus
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("crocodile8.lib_image_picker.test", appContext.packageName)
+        assertEquals("crocodile8.image_picker_plus.test", appContext.packageName)
     }
 }

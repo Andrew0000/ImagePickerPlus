@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'crocodile8.lib_image_picker'
+    namespace 'crocodile8.image_picker_plus'
     compileSdk 33
 
     defaultConfig {
