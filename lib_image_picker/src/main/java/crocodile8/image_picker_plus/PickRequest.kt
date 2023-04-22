@@ -3,7 +3,8 @@ package crocodile8.image_picker_plus
 import java.io.Serializable
 
 data class PickRequest(
-    val sources: List<PickSource>,
+    val source: PickSource,
+    val mimeTypes: List<String> = listOf("image/*"),
     val size: PickSize? = null,
     val useCrop: Boolean = true,
 ) : Serializable
