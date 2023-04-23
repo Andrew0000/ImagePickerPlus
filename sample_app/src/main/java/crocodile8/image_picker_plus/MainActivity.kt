@@ -1,11 +1,11 @@
 package crocodile8.image_picker_plus
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import crocodile8.image_picker_plus.utils.Logger
 
 class MainActivity : AppCompatActivity() {
@@ -16,31 +16,37 @@ class MainActivity : AppCompatActivity() {
     private val cbSize by lazy { findViewById<CheckBox>(R.id.cbSize) }
     private val cbUseCrop by lazy { findViewById<CheckBox>(R.id.cbUseCrop) }
 
+    private val launcher = registerForActivityResult(StartActivityForResult()) {
+        it?.data?.data?.let { uri ->
+            imageView1.setImageURI(uri)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Logger.enabled = true
 
         btnGallery.setOnClickListener {
-            ImagePickerPlus.launch(
+            ImagePickerPlus.createIntent(
                 activity = this,
                 PickRequest(
                     source = PickSource.GALLERY,
                     maxSidePx = getSize(),
                     useCrop = cbUseCrop.isChecked,
                 )
-            )
+            ).let { launcher.launch(it) }
         }
 
         btnCamera.setOnClickListener {
-            ImagePickerPlus.launch(
+            ImagePickerPlus.createIntent(
                 activity = this,
                 PickRequest(
                     source = PickSource.CAMERA,
                     maxSidePx = getSize(),
                     useCrop = cbUseCrop.isChecked,
                 )
-            )
+            ).let { launcher.launch(it) }
         }
     }
 
@@ -50,11 +56,4 @@ class MainActivity : AppCompatActivity() {
         } else {
             0
         }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        data?.data?.let {
-            imageView1.setImageURI(it)
-        }
-    }
 }
