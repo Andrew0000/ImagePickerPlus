@@ -1,10 +1,11 @@
-package crocodile8.image_picker_plus
+package crocodile8.image_picker_plus.picker
 
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import crocodile8.image_picker_plus.PickRequest
 import crocodile8.image_picker_plus.utils.Logger
 
 // https://developer.android.com/training/data-storage/shared/documents-files#bitmap

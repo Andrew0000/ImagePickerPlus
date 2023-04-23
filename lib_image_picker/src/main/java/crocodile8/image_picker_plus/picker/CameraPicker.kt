@@ -1,4 +1,4 @@
-package crocodile8.image_picker_plus
+package crocodile8.image_picker_plus.picker
 
 import android.app.Activity
 import android.content.Intent
@@ -8,6 +8,8 @@ import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.content.FileProvider
+import crocodile8.image_picker_plus.PickRequest
+import crocodile8.image_picker_plus.R
 import crocodile8.image_picker_plus.utils.Logger
 import crocodile8.image_picker_plus.utils.Utils.createEmptyUniqueFile
 import java.io.File
