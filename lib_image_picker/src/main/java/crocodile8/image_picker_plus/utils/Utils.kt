@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.webkit.MimeTypeMap
-import crocodile8.image_picker_plus.PickSize
 import java.io.Closeable
 import java.io.File
 import java.io.IOException
@@ -73,9 +72,6 @@ internal fun Uri.getExt(context: Context): String? {
     val mime = context.contentResolver.getType(this)
     return MimeTypeMap.getSingleton().getExtensionFromMimeType(mime)
 }
-
-internal fun PickSize?.processingIsNeeded() =
-    this != null && (maxSidePx > 0 && maxSizeBytes > 0)
 
 fun Closeable.closeSilent() =
     try {

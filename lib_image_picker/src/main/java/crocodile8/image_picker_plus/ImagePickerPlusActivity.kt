@@ -10,7 +10,6 @@ import crocodile8.image_picker_plus.picker.GalleryPicker
 import crocodile8.image_picker_plus.processor.CropProcessor
 import crocodile8.image_picker_plus.processor.SizeProcessor
 import crocodile8.image_picker_plus.utils.Logger
-import crocodile8.image_picker_plus.utils.processingIsNeeded
 
 //TODO check with DKA
 //TODO delete tmp files
@@ -70,7 +69,7 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
 
     private fun routeResult(uri: Uri?) {
         when {
-            uri != null && request.size.processingIsNeeded() && !sized -> {
+            uri != null && request.maxSidePx > 0 && !sized -> {
                 sizeProcessor.launch(uri, request)
             }
             uri != null && request.useCrop && !cropped -> {

@@ -5,7 +5,7 @@ import java.io.Serializable
 data class PickRequest(
     val source: PickSource,
     val mimeTypes: List<String> = listOf("image/*"),
-    val size: PickSize? = null,
+    val maxSidePx: Int = -1,
     val useCrop: Boolean = true,
 ) : Serializable
 
@@ -13,8 +13,3 @@ enum class PickSource {
     GALLERY,
     CAMERA,
 }
-
-data class PickSize(
-    val maxSidePx: Int,
-    val maxSizeBytes: Int,
-) : Serializable

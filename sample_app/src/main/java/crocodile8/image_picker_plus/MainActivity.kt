@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
                 activity = this,
                 PickRequest(
                     source = PickSource.GALLERY,
-                    size = getSize(),
+                    maxSidePx = getSize(),
                     useCrop = cbUseCrop.isChecked,
                 )
             )
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 activity = this,
                 PickRequest(
                     source = PickSource.CAMERA,
-                    size = getSize(),
+                    maxSidePx = getSize(),
                     useCrop = cbUseCrop.isChecked,
                 )
             )
@@ -46,9 +46,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun getSize() =
         if (cbSize.isChecked) {
-            PickSize(maxSidePx = 50, maxSizeBytes = 10_000)
+           50
         } else {
-            null
+            0
         }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
