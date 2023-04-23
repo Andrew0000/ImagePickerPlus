@@ -9,8 +9,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.content.FileProvider
 import crocodile8.image_picker_plus.utils.Logger
+import crocodile8.image_picker_plus.utils.Utils.createEmptyUniqueFile
 import java.io.File
-import java.io.IOException
 
 //https://developer.android.com/training/camera-deprecated/photobasics#TaskPath
 
@@ -41,7 +41,7 @@ class CameraPicker(
             Logger.e("Don't have camera")
             return
         }
-        val file = createEmptyFile()
+        val file = createEmptyUniqueFile(context)
         Logger.d("CameraPicker launch file: $file")
         tmpFile = file
         if (file != null && file.exists()) {
@@ -65,20 +65,4 @@ class CameraPicker(
         return intent
     }
 
-    private fun createEmptyFile(): File? =
-        try {
-            val fileDir = File(context.cacheDir.absolutePath + "/image_picker_plus_cache")
-            val ext = ".jpg"
-            val fileName = "tmp_${System.currentTimeMillis()}"
-            val imageFileName = "$fileName$ext"
-            if (!fileDir.exists()) {
-                fileDir.mkdirs()
-            }
-            val file = File(fileDir, imageFileName)
-            file.createNewFile()
-            file
-        } catch (e: IOException) {
-            Logger.e("", e)
-            null
-        }
 }

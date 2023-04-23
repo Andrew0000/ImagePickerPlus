@@ -16,19 +16,32 @@ class ImagePickerPlusActivity : AppCompatActivity() {
 
     private val galleryPicker by lazy {
         GalleryPicker(this) {
-            finishWithResult(it)
+            routeResult(it)
         }
     }
 
     private val cameraPicker by lazy {
         CameraPicker(this) {
-            finishWithResult(it)
+            routeResult(it)
         }
     }
+
+    private val cropProcessor by lazy {
+        CropProcessor(this) {
+            cropped = true
+            routeResult(it)
+        }
+    }
+
+    //TODO store in saved state
+    private var cropped = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Logger.i("ImagePickerPlusActivity onCreate request: $request")
+        if (request.useCrop) {
+            cropProcessor // initialization
+        }
         when (request.source) {
             PickSource.GALLERY -> {
                 galleryPicker.launch(request)
@@ -36,6 +49,14 @@ class ImagePickerPlusActivity : AppCompatActivity() {
             PickSource.CAMERA -> {
                 cameraPicker.launch(request)
             }
+        }
+    }
+
+    private fun routeResult(uri: Uri?) {
+        if (uri != null && request.useCrop && !cropped) {
+            cropProcessor.launch(uri)
+        } else {
+            finishWithResult(uri)
         }
     }
 
