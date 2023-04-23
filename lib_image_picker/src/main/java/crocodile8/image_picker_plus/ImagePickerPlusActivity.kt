@@ -10,6 +10,9 @@ import crocodile8.image_picker_plus.picker.GalleryPicker
 import crocodile8.image_picker_plus.processor.CropProcessor
 import crocodile8.image_picker_plus.utils.Logger
 
+//TODO check with DKA
+//TODO delete tmp files
+
 internal class ImagePickerPlusActivity : AppCompatActivity() {
 
     private val request: PickRequest by lazy {

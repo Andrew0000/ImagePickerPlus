@@ -8,7 +8,6 @@ import com.yalantis.ucrop.UCrop
 import crocodile8.image_picker_plus.utils.Logger
 import crocodile8.image_picker_plus.utils.Utils
 import crocodile8.image_picker_plus.utils.getExtOrJpeg
-import java.io.File
 
 internal class CropProcessor(
     activity: ComponentActivity,
@@ -16,16 +15,18 @@ internal class CropProcessor(
 ) {
     private val context = activity.applicationContext
 
-    private var tmpFile: File? = null
-
     private val launcher = activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        val uri = it.data?.data
-        val tmpUri = Uri.fromFile(tmpFile)
-        Logger.i("uri: $uri / $tmpUri")
-        if (it.resultCode == Activity.RESULT_OK && tmpUri != null) {
-            onResult(tmpUri)
+        val data = it.data
+        val uri = if (data != null) {
+            UCrop.getOutput(data)
         } else {
-            Logger.e("CropProxy result error: ${it.resultCode}, uri: $uri")
+            null
+        }
+        Logger.i("uri: $uri / $data")
+        if (it.resultCode == Activity.RESULT_OK && uri != null) {
+            onResult(uri)
+        } else {
+            Logger.e("CropProcessor result error: ${it.resultCode}, uri: $uri")
             onResult(null)
         }
     }
@@ -34,7 +35,6 @@ internal class CropProcessor(
         val ext = uri.getExtOrJpeg(context)
         val file = Utils.createEmptyUniqueFile(context, ext)
         Logger.d("CropProxy launch file: $file")
-        tmpFile = file
 
         if (file == null || !file.exists()) {
             Logger.e("No file")
