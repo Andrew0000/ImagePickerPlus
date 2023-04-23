@@ -10,7 +10,7 @@ import crocodile8.image_picker_plus.picker.GalleryPicker
 import crocodile8.image_picker_plus.processor.CropProcessor
 import crocodile8.image_picker_plus.utils.Logger
 
-class ImagePickerPlusActivity : AppCompatActivity() {
+internal class ImagePickerPlusActivity : AppCompatActivity() {
 
     private val request: PickRequest by lazy {
         @Suppress("DEPRECATION")
