@@ -16,5 +16,5 @@ enum class PickSource {
 
 data class PickSize(
     val maxSidePx: Int,
-    val maxWeightBytes: Int,
+    val maxSizeBytes: Int,
 ) : Serializable

@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import crocodile8.image_picker_plus.picker.CameraPicker
 import crocodile8.image_picker_plus.picker.GalleryPicker
 import crocodile8.image_picker_plus.processor.CropProcessor
+import crocodile8.image_picker_plus.processor.SizeProcessor
 import crocodile8.image_picker_plus.utils.Logger
+import crocodile8.image_picker_plus.utils.processingIsNeeded
 
 //TODO check with DKA
 //TODO delete tmp files
@@ -32,6 +34,13 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
         }
     }
 
+    private val sizeProcessor by lazy {
+        SizeProcessor(this) {
+            sized = true
+            routeResult(it)
+        }
+    }
+
     private val cropProcessor by lazy {
         CropProcessor(this) {
             cropped = true
@@ -40,6 +49,7 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
     }
 
     //TODO store in saved state
+    private var sized = false
     private var cropped = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,10 +69,16 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
     }
 
     private fun routeResult(uri: Uri?) {
-        if (uri != null && request.useCrop && !cropped) {
-            cropProcessor.launch(uri)
-        } else {
-            finishWithResult(uri)
+        when {
+            uri != null && request.size.processingIsNeeded() && !sized -> {
+                sizeProcessor.launch(uri, request)
+            }
+            uri != null && request.useCrop && !cropped -> {
+                cropProcessor.launch(uri)
+            }
+            else -> {
+                finishWithResult(uri)
+            }
         }
     }
 

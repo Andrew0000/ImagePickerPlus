@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:orientation="vertical" >
 
         <Button
             android:id="@+id/btnGallery"
@@ -27,6 +26,18 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="Camera" />
+
+        <CheckBox
+            android:id="@+id/cbSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Limit image side to 50 px"/>
+
+        <CheckBox
+            android:id="@+id/cbUseCrop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Use Crop"/>
 
         <ImageView
             android:id="@+id/imageView1"
