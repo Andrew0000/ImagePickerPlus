@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import crocodile8.image_picker_plus.picker.CameraPicker
 import crocodile8.image_picker_plus.picker.GalleryPicker
+import crocodile8.image_picker_plus.processor.CropProcessor
 import crocodile8.image_picker_plus.utils.Logger
 
 class ImagePickerPlusActivity : AppCompatActivity() {

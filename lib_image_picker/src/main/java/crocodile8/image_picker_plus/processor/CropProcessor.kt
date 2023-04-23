@@ -1,4 +1,4 @@
-package crocodile8.image_picker_plus
+package crocodile8.image_picker_plus.processor
 
 import android.app.Activity
 import android.net.Uri
