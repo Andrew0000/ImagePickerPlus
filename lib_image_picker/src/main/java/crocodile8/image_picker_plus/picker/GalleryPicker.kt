@@ -5,8 +5,12 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.core.net.toUri
 import crocodile8.image_picker_plus.PickRequest
 import crocodile8.image_picker_plus.utils.Logger
+import crocodile8.image_picker_plus.utils.Utils.copyUriContentToFile
+import crocodile8.image_picker_plus.utils.Utils.createEmptyUniqueFile
+import crocodile8.image_picker_plus.utils.getExtOrJpeg
 
 // https://developer.android.com/training/data-storage/shared/documents-files#bitmap
 
@@ -14,12 +18,26 @@ internal class GalleryPicker(
     private val activity: ComponentActivity,
     private val onResult: (Uri?) -> Unit,
 ) {
+    private val context = activity.applicationContext
 
     private val launcher = activity.registerForActivityResult(StartActivityForResult()) {
         val uri = it.data?.data
-        Logger.i("uri: $uri")
+        Logger.i("GalleryPicker uri: $uri")
         if (it.resultCode == Activity.RESULT_OK && uri != null) {
-            onResult(uri)
+            // Copy content of public Uri to a local file
+            val tmpFile = createEmptyUniqueFile(context, uri.getExtOrJpeg(context))
+            if (tmpFile == null) {
+                Logger.e("GalleryPicker null tmpFile")
+                onResult(null)
+            } else {
+                try {
+                    copyUriContentToFile(context, uri, tmpFile)
+                    onResult(tmpFile.toUri())
+                } catch (e: Exception) {
+                    Logger.e("", e)
+                    onResult(null)
+                }
+            }
         } else {
             Logger.e("GalleryPicker result error: ${it.resultCode}, uri: $uri")
             onResult(null)
