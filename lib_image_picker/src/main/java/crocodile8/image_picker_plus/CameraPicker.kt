@@ -16,7 +16,7 @@ import java.io.IOException
 
 class CameraPicker(
     activity: ComponentActivity,
-    private val onResult: (Uri) -> Unit,
+    private val onResult: (Uri?) -> Unit,
 ) {
 
     private val context = activity.applicationContext
@@ -32,7 +32,7 @@ class CameraPicker(
             onResult(tmpUri)
         } else {
             Logger.e("CameraPicker result error: ${it.resultCode}, uri: $uri")
-            //TODO show error
+            onResult(null)
         }
     }
 

@@ -16,13 +16,13 @@ class ImagePickerPlusActivity : AppCompatActivity() {
 
     private val galleryPicker by lazy {
         GalleryPicker(this) {
-            setResultOK(it)
+            finishWithResult(it)
         }
     }
 
     private val cameraPicker by lazy {
         CameraPicker(this) {
-            setResultOK(it)
+            finishWithResult(it)
         }
     }
 
@@ -39,7 +39,22 @@ class ImagePickerPlusActivity : AppCompatActivity() {
         }
     }
 
-    private fun setResultOK(uri: Uri?) {
+    private fun finishWithResult(uri: Uri?) {
+        if (uri == null) {
+            finishAsCancelled()
+        } else {
+            finishAsOK(uri)
+        }
+    }
+
+    private fun finishAsCancelled() {
+        val intent = Intent()
+        intent.putExtra("error", "Error")
+        setResult(Activity.RESULT_CANCELED, intent)
+        finish()
+    }
+
+    private fun finishAsOK(uri: Uri) {
         val intent = Intent()
         intent.data = uri
         setResult(Activity.RESULT_OK, intent)

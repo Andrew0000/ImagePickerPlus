@@ -11,7 +11,7 @@ import crocodile8.image_picker_plus.utils.Logger
 
 class GalleryPicker(
     private val activity: ComponentActivity,
-    private val onResult: (Uri) -> Unit,
+    private val onResult: (Uri?) -> Unit,
 ) {
 
     private val launcher = activity.registerForActivityResult(StartActivityForResult()) {
@@ -21,7 +21,7 @@ class GalleryPicker(
             onResult(uri)
         } else {
             Logger.e("GalleryPicker result error: ${it.resultCode}, uri: $uri")
-            //TODO show error
+            onResult(null)
         }
     }
 
