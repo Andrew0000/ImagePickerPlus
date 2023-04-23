@@ -10,7 +10,7 @@ import crocodile8.image_picker_plus.utils.Utils
 import crocodile8.image_picker_plus.utils.getExtOrJpeg
 import java.io.File
 
-class CropProcessor(
+internal class CropProcessor(
     activity: ComponentActivity,
     private val onResult: (Uri?) -> Unit,
 ) {

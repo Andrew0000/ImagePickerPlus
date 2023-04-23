@@ -10,7 +10,7 @@ import crocodile8.image_picker_plus.utils.Logger
 
 // https://developer.android.com/training/data-storage/shared/documents-files#bitmap
 
-class GalleryPicker(
+internal class GalleryPicker(
     private val activity: ComponentActivity,
     private val onResult: (Uri?) -> Unit,
 ) {

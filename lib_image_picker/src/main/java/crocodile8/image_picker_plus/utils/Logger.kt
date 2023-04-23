@@ -8,15 +8,15 @@ object Logger {
 
     private const val TAG = "IPP"
 
-    fun d(text: String) {
+    internal fun d(text: String) {
         if (enabled) Log.d(TAG, text)
     }
 
-    fun i(text: String) {
+    internal fun i(text: String) {
         if (enabled) Log.i(TAG, text)
     }
 
-    fun e(text: String, throwable: Throwable? = null) {
+    internal fun e(text: String, throwable: Throwable? = null) {
         if (enabled) Log.e(TAG, text, throwable)
     }
 }
