@@ -2,6 +2,8 @@ package crocodile8.image_picker_plus.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import androidx.exifinterface.media.ExifInterface
 import java.io.File
 
 /*
@@ -17,7 +19,29 @@ object BitmapUtils {
         bitmap.recycle()
         Logger.d("bitmap maxSide: $maxSide resized as: ${resized.width} / ${resized.height}")
 
-        return resized
+        val resizedRotated = fixImageRotation(imageFile, resized)
+        resized.recycle()
+
+        return resizedRotated
+    }
+
+    private fun fixImageRotation(imageFile: File, bitmap: Bitmap): Bitmap {
+        val neededRotation = getNeededRotation(imageFile)
+        val matrix = Matrix()
+        matrix.postRotate(neededRotation)
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
+
+    private fun getNeededRotation(imageFile: File): Float {
+        val exif = ExifInterface(imageFile.absolutePath)
+        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0)
+        Logger.d("orientation: $orientation")
+        return when (orientation) {
+            6 -> 90f
+            3 -> 180f
+            8 -> 270f
+            else -> 0f
+        }
     }
 
     private fun resize(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
