@@ -11,7 +11,6 @@ import crocodile8.image_picker_plus.processor.CropProcessor
 import crocodile8.image_picker_plus.processor.SizeProcessor
 import crocodile8.image_picker_plus.utils.Logger
 
-//TODO check with DKA
 //TODO delete tmp files
 
 internal class ImagePickerPlusActivity : AppCompatActivity() {
