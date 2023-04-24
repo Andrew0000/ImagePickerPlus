@@ -12,6 +12,8 @@ import java.io.File
 object BitmapUtils {
 
     fun decodeScaledBitmapFromFile(imageFile: File, maxSide: Int): Bitmap {
+        Logger.d("decodeScaledBitmapFromFile: $imageFile")
+
         val bitmap = decodeSampledBitmapFromFile(imageFile, maxSide)
         Logger.d("bitmap maxSide: $maxSide decoded as: ${bitmap.width} / ${bitmap.height}")
 
