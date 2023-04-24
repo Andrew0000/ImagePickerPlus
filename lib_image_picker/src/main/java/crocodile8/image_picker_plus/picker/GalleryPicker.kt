@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.net.toUri
 import crocodile8.image_picker_plus.PickRequest
+import crocodile8.image_picker_plus.TypeFilter
 import crocodile8.image_picker_plus.utils.Logger
 import crocodile8.image_picker_plus.utils.Utils.copyUriContentToFile
 import crocodile8.image_picker_plus.utils.Utils.createEmptyLocalUniqueFile
@@ -46,7 +47,7 @@ internal class GalleryPicker(
     }
 
     fun launch(request: PickRequest) {
-        val intent = createPickIntent(request.mimeTypes)
+        val intent = createPickIntent(request.filter)
         if (intent.resolveActivity(activity.packageManager) != null) {
             Logger.i("GalleryPicker intent resolveActivity OK")
             launcher.launch(intent)
@@ -56,12 +57,11 @@ internal class GalleryPicker(
         }
     }
 
-    private fun createPickIntent(mimeTypes: List<String>): Intent {
+    private fun createPickIntent(filter: TypeFilter): Intent {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            //TODO handle other types
-            type = "image/*"
-            if (mimeTypes.isNotEmpty()) {
-                putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes.toTypedArray())
+            type = filter.mimeType
+            if (filter.subTypes.isNotEmpty()) {
+                putExtra(Intent.EXTRA_MIME_TYPES, filter.subTypes.toTypedArray())
             }
         }
         intent.addCategory(Intent.CATEGORY_OPENABLE)
