@@ -3,8 +3,10 @@
 package crocodile8.image_picker_plus
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import crocodile8.image_picker_plus.utils.Utils
 
 object ImagePickerPlus {
 
@@ -22,6 +24,10 @@ object ImagePickerPlus {
      */
     fun launch(activity: Activity, request: PickRequest, requestCode: Int = 1) {
         activity.startActivityForResult(createIntent(activity, request), requestCode)
+    }
+
+    fun clearCache(context: Context) {
+        Utils.clearTmpDir(context)
     }
 
     private fun createBundle(request: PickRequest) =

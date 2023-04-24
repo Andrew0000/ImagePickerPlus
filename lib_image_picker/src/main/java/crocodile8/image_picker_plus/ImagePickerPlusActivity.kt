@@ -10,8 +10,7 @@ import crocodile8.image_picker_plus.picker.GalleryPicker
 import crocodile8.image_picker_plus.processor.CropProcessor
 import crocodile8.image_picker_plus.processor.SizeProcessor
 import crocodile8.image_picker_plus.utils.Logger
-
-//TODO delete tmp files
+import crocodile8.image_picker_plus.utils.Utils
 
 internal class ImagePickerPlusActivity : AppCompatActivity() {
 
@@ -51,16 +50,20 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val launchedBefore = savedInstanceState != null // if activity recreation
         Logger.i("ImagePickerPlusActivity onCreate request: $request")
 
         savedInstanceState?.getBoolean(SAVED_SIZED)?.let { sized = it }
         savedInstanceState?.getBoolean(SAVED_CROPPED)?.let { cropped = it }
         Logger.i("ImagePickerPlusActivity onCreate, sized: $sized, cropped: $cropped")
 
+        if (!launchedBefore && request.clearPreviousCache) {
+            Utils.clearTmpDir(applicationContext)
+        }
+
         if (request.useCrop) {
             cropProcessor // initialization
         }
-        val launchedBefore = savedInstanceState != null // if activity recreation
         when (request.source) {
             PickSource.GALLERY -> {
                 galleryPicker // initialization

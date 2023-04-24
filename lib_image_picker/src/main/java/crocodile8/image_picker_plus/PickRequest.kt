@@ -7,6 +7,7 @@ data class PickRequest(
     val mimeTypes: List<String> = listOf("image/*"),
     val maxSidePx: Int = -1,
     val useCrop: Boolean = true,
+    val clearPreviousCache: Boolean = true,
 ) : Serializable
 
 enum class PickSource {

@@ -15,6 +15,15 @@ internal object Utils {
     private val separator = File.separator
 
     @Throws
+    fun clearTmpDir(context: Context) {
+        val listFiles = getTmpDir(context).listFiles()
+        Logger.d("clearTmpDir: ${listFiles?.size}")
+        listFiles?.forEach {
+            it.delete()
+        }
+    }
+
+    @Throws
     fun copyUriContentToFile(context: Context, uri: Uri, file: File) {
         @SuppressLint("Recycle") // False positive, inputStream is closed with .closeSilent()
         val inputStream = context.contentResolver.openInputStream(uri)!!
