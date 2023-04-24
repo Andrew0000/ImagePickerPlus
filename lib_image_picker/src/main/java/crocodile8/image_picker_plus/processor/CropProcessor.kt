@@ -33,7 +33,7 @@ internal class CropProcessor(
 
     fun launch(uri: Uri) {
         val ext = uri.getExtOrJpeg(context)
-        val file = Utils.createEmptyUniqueFile(context, ext)
+        val file = Utils.createEmptyLocalUniqueFile(context, ext)
         Logger.d("CropProcessor launch file: $file")
 
         if (file == null || !file.exists()) {

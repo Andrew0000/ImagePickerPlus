@@ -9,7 +9,7 @@ import androidx.core.net.toUri
 import crocodile8.image_picker_plus.PickRequest
 import crocodile8.image_picker_plus.utils.Logger
 import crocodile8.image_picker_plus.utils.Utils.copyUriContentToFile
-import crocodile8.image_picker_plus.utils.Utils.createEmptyUniqueFile
+import crocodile8.image_picker_plus.utils.Utils.createEmptyLocalUniqueFile
 import crocodile8.image_picker_plus.utils.getExtOrJpeg
 
 // https://developer.android.com/training/data-storage/shared/documents-files#bitmap
@@ -25,7 +25,7 @@ internal class GalleryPicker(
         Logger.i("GalleryPicker uri: $uri")
         if (it.resultCode == Activity.RESULT_OK && uri != null) {
             // Copy content of public Uri to a local file
-            val tmpFile = createEmptyUniqueFile(context, uri.getExtOrJpeg(context))
+            val tmpFile = createEmptyLocalUniqueFile(context, uri.getExtOrJpeg(context))
             if (tmpFile == null) {
                 Logger.e("GalleryPicker null tmpFile")
                 onResult(null)

@@ -27,7 +27,7 @@ internal object Utils {
         }
     }
 
-    fun createEmptyUniqueFile(context: Context, ext: String = "jpg"): File? =
+    fun createEmptyLocalUniqueFile(context: Context, ext: String = "jpg"): File? =
         try {
             val fileName = "tmp_${System.currentTimeMillis()}"
             val fileNameFull = "$fileName.$ext"

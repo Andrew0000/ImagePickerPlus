@@ -12,7 +12,7 @@ import androidx.core.content.FileProvider
 import crocodile8.image_picker_plus.PickRequest
 import crocodile8.image_picker_plus.R
 import crocodile8.image_picker_plus.utils.Logger
-import crocodile8.image_picker_plus.utils.Utils.createEmptyUniqueFile
+import crocodile8.image_picker_plus.utils.Utils.createEmptyLocalUniqueFile
 import java.io.File
 
 //https://developer.android.com/training/camera-deprecated/photobasics#TaskPath
@@ -44,7 +44,7 @@ internal class CameraPicker(
             Logger.e("Don't have camera")
             return
         }
-        val file = createEmptyUniqueFile(context)
+        val file = createEmptyLocalUniqueFile(context)
         Logger.d("CameraPicker launch file: $file")
         tmpFile = file
         if (file != null && file.exists()) {
