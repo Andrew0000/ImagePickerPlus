@@ -14,12 +14,15 @@ internal object Utils {
 
     private val separator = File.separator
 
-    @Throws
     fun clearTmpDir(context: Context) {
-        val listFiles = getTmpDir(context).listFiles()
-        Logger.d("clearTmpDir: ${listFiles?.size}")
-        listFiles?.forEach {
-            it.delete()
+        try {
+            val listFiles = getTmpDir(context).listFiles()
+            Logger.d("clearTmpDir: ${listFiles?.size}")
+            listFiles?.forEach {
+                it.delete()
+            }
+        } catch (e: IOException) {
+            Logger.e("clearTmpDir", e)
         }
     }
 
