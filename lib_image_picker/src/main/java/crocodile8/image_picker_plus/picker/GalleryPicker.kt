@@ -26,6 +26,7 @@ internal class GalleryPicker(
         if (it.resultCode == Activity.RESULT_OK && uri != null) {
             // Copy content of public Uri to a local file
             val tmpFile = createEmptyLocalUniqueFile(context, uri.getExtOrJpeg(context))
+            Logger.i("GalleryPicker tmpFile: $tmpFile")
             if (tmpFile == null) {
                 Logger.e("GalleryPicker null tmpFile")
                 onResult(null)
