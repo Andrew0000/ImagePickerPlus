@@ -1,6 +1,7 @@
 package crocodile8.image_picker_plus.utils
 
 import android.annotation.SuppressLint
+import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
@@ -84,7 +85,34 @@ internal fun Uri.getExtOrJpeg(context: Context): String =
 
 internal fun Uri.getExt(context: Context): String? {
     val mime = context.contentResolver.getType(this)
-    return MimeTypeMap.getSingleton().getExtensionFromMimeType(mime)
+    Logger.d("Uri.getExt: $this, mime: $mime")
+    if (mime != null) {
+        return MimeTypeMap.getSingleton().getExtensionFromMimeType(mime)
+    }
+    if (ContentResolver.SCHEME_FILE == scheme) {
+        return MimeTypeMap.getFileExtensionFromUrl(path).also {
+            Logger.d("ext: $it")
+        }
+    }
+    return getExtFromFileName().also {
+        Logger.d("ext: $it")
+    }
+}
+
+/**
+ * Last resort, doesn't work with files from some uri providers.
+ */
+internal fun Uri.getExtFromFileName(): String? =
+    path.getFileExt()
+
+/**
+ * Last resort, doesn't work with files from some uri providers.
+ */
+private fun String?.getFileExt(): String? {
+    if (this?.contains(".") == true) {
+        return substring(lastIndexOf(".") + 1)
+    }
+    return null
 }
 
 fun Closeable.closeSilent() =
