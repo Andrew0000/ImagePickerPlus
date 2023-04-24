@@ -42,6 +42,7 @@ internal class CameraPicker(
     fun launch(request: PickRequest) {
         if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
             Logger.e("Don't have camera")
+            onResult(null)
             return
         }
         val file = createEmptyLocalUniqueFile(context)
@@ -53,10 +54,11 @@ internal class CameraPicker(
                 launcher.launch(intent)
             } else {
                 Logger.e("CameraPicker intent resolveActivity error")
-                //TODO show error
+                onResult(null)
             }
         } else {
             Logger.e("Error, file: $file")
+            onResult(null)
         }
     }
 
