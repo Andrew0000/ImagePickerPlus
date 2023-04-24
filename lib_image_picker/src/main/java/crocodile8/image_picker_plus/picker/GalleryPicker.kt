@@ -51,7 +51,7 @@ internal class GalleryPicker(
             launcher.launch(intent)
         } else {
             Logger.e("GalleryPicker intent resolveActivity error")
-            //TODO show error
+            onResult(null)
         }
     }
 
