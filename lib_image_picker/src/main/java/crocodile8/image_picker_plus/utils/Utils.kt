@@ -12,6 +12,8 @@ import java.io.IOException
 
 internal object Utils {
 
+    private val separator = File.separator
+
     @Throws
     fun copyUriContentToFile(context: Context, uri: Uri, file: File) {
         @SuppressLint("Recycle") // False positive, inputStream is closed with .closeSilent()
@@ -57,7 +59,7 @@ internal object Utils {
     }
 
     private fun getTmpDir(context: Context): File {
-        val dir = File(context.cacheDir.absolutePath + "/image_picker_plus_cache")
+        val dir = File(context.cacheDir.absolutePath + "${separator}image_picker_plus_cache")
         if (!dir.exists()) {
             dir.mkdirs()
         }
