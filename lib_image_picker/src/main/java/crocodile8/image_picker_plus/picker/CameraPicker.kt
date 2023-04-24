@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
@@ -29,7 +30,7 @@ internal class CameraPicker(
     private val launcher = activity.registerForActivityResult(StartActivityForResult()) {
         val uri = it.data?.data
         val tmpUri = Uri.fromFile(tmpFile)
-        Logger.i("uri: $uri / $tmpUri")
+        Logger.i("CameraPicker uri: $uri / $tmpUri")
         if (it.resultCode == Activity.RESULT_OK && tmpUri != null) {
             onResult(tmpUri)
         } else {
@@ -59,6 +60,20 @@ internal class CameraPicker(
         }
     }
 
+    fun onSaveInstanceState(outState: Bundle) {
+        Logger.i("CameraPicker onSaveInstanceState, tmpFile: $tmpFile")
+        tmpFile?.let {
+            outState.putString(SAVED_FILE, it.path)
+        }
+    }
+
+    fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        Logger.i("CameraPicker onRestoreInstanceState: $savedInstanceState")
+        savedInstanceState.getString(SAVED_FILE)?.let {
+            tmpFile = File(it)
+        }
+    }
+
     private fun createIntent(file: File): Intent {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         val authority = context.packageName + context.getString(R.string.file_provider_name)
@@ -67,4 +82,7 @@ internal class CameraPicker(
         return intent
     }
 
+    companion object {
+        private const val SAVED_FILE = "camera_picker_saved_file"
+    }
 }

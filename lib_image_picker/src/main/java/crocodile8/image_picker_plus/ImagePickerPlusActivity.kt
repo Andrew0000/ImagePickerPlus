@@ -47,22 +47,62 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
         }
     }
 
-    //TODO store in saved state
     private var sized = false
     private var cropped = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Logger.i("ImagePickerPlusActivity onCreate request: $request")
+
+        savedInstanceState?.getBoolean(SAVED_SIZED)?.let { sized = it }
+        savedInstanceState?.getBoolean(SAVED_CROPPED)?.let { cropped = it }
+        Logger.i("ImagePickerPlusActivity onCreate, sized: $sized, cropped: $cropped")
+
         if (request.useCrop) {
             cropProcessor // initialization
         }
+        val launchedBefore = savedInstanceState != null // if activity recreation
         when (request.source) {
             PickSource.GALLERY -> {
-                galleryPicker.launch(request)
+                galleryPicker // initialization
+                if (!launchedBefore) {
+                    galleryPicker.launch(request)
+                }
             }
             PickSource.CAMERA -> {
-                cameraPicker.launch(request)
+                cameraPicker // initialization
+                if (!launchedBefore) {
+                    cameraPicker.launch(request)
+                }
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putBoolean(SAVED_SIZED, sized)
+        outState.putBoolean(SAVED_CROPPED, cropped)
+        Logger.i("onSaveInstanceState, sized: $sized, cropped: $cropped")
+
+        when (request.source) {
+            PickSource.GALLERY -> {
+                // Empty
+            }
+            PickSource.CAMERA -> {
+                cameraPicker.onSaveInstanceState(outState)
+            }
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        when (request.source) {
+            PickSource.GALLERY -> {
+                // Empty
+            }
+            PickSource.CAMERA -> {
+                cameraPicker.onRestoreInstanceState(savedInstanceState)
             }
         }
     }
@@ -104,7 +144,8 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
     }
 
     companion object {
-
         const val REQUEST_SPEC = "request_spec"
+        private const val SAVED_SIZED = "camera_picker_activity_saved_sized"
+        private const val SAVED_CROPPED = "camera_picker_activity_saved_cropped"
     }
 }
