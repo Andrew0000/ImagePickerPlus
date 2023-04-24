@@ -19,17 +19,19 @@ object BitmapUtils {
         bitmap.recycle()
         Logger.d("bitmap maxSide: $maxSide resized as: ${resized.width} / ${resized.height}")
 
-        val resizedRotated = fixImageRotation(imageFile, resized)
-        resized.recycle()
-
-        return resizedRotated
+        return fixImageRotation(imageFile, resized)
     }
 
     private fun fixImageRotation(imageFile: File, bitmap: Bitmap): Bitmap {
         val neededRotation = getNeededRotation(imageFile)
+        if (neededRotation == 0f) {
+            return bitmap
+        }
         val matrix = Matrix()
         matrix.postRotate(neededRotation)
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+        val rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+        bitmap.recycle()
+        return rotated
     }
 
     private fun getNeededRotation(imageFile: File): Float {
