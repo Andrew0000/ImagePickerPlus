@@ -23,6 +23,7 @@ internal class SizeProcessor(
                 val bitmap = decodeScaledBitmapFromFile(uri.toFile(), request.maxSidePx)
                 val ext = uri.getExtOrJpeg(context)
                 val file = createEmptyLocalUniqueFile(context, ext)
+                Logger.d("SizeProcessor file: $file")
                 if (file != null) {
                     bitmap.compress(mapCompressFormat(ext), 80, file.outputStream())
                     bitmap.recycle()
