@@ -54,6 +54,6 @@ class MainActivity : AppCompatActivity() {
         if (cbSize.isChecked) {
            50
         } else {
-            0
+            2048
         }
 }

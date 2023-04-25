@@ -5,7 +5,7 @@ import java.io.Serializable
 data class PickRequest(
     val source: PickSource,
     val filter: TypeFilter = TypeFilter(),
-    val maxSidePx: Int = -1,
+    val maxSidePx: Int = 2048,
     val useCrop: Boolean = true,
     val clearPreviousCache: Boolean = true,
 ) : Serializable
