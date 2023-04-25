@@ -80,8 +80,13 @@ internal object Utils {
     }
 }
 
-internal fun Uri.getExtOrJpeg(context: Context): String =
-    getExt(context) ?: "jpg"
+internal fun Uri.getExtOrJpeg(context: Context): String {
+    val ext = getExt(context)
+    if (!ext.isNullOrEmpty()) {
+        return ext
+    }
+    return "jpg"
+}
 
 internal fun Uri.getExt(context: Context): String? {
     val mime = context.contentResolver.getType(this)
