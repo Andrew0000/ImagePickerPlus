@@ -3,8 +3,8 @@ package crocodile8.image_picker_plus.provider
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.net.toUri
 import crocodile8.image_picker_plus.PickRequest
 import crocodile8.image_picker_plus.TypeFilter
@@ -16,44 +16,52 @@ import crocodile8.image_picker_plus.utils.getExtOrJpeg
 // https://developer.android.com/training/data-storage/shared/documents-files#bitmap
 
 internal class GalleryProvider(
-    private val activity: ComponentActivity,
-    private val onResult: (Uri?) -> Unit,
-) {
-    private val context = activity.applicationContext
+    activity: ComponentActivity,
+    request: PickRequest,
+    onResult: (Uri?, Throwable?) -> Unit,
+) : StartActivityForResultProvider(activity, request, onResult) {
 
-    private val launcher = activity.registerForActivityResult(StartActivityForResult()) {
-        val uri = it.data?.data
-        Logger.i("GalleryPicker uri: $uri")
-        if (it.resultCode == Activity.RESULT_OK && uri != null) {
+    override fun onResult(resultCode: Int, intent: Intent?) {
+        val uri = intent?.data
+        Logger.i("GalleryProvider uri: $uri")
+        if (resultCode == Activity.RESULT_OK && uri != null) {
             // Copy content of public Uri to a local file
             val tmpFile = createEmptyLocalUniqueFile(context, uri.getExtOrJpeg(context))
-            Logger.i("GalleryPicker tmpFile: $tmpFile")
+            Logger.i("GalleryProvider tmpFile: $tmpFile")
             if (tmpFile == null) {
-                Logger.e("GalleryPicker null tmpFile")
-                onResult(null)
+                Logger.e("GalleryProvider null tmpFile")
+                onError()
             } else {
                 try {
                     copyUriContentToFile(context, uri, tmpFile)
-                    onResult(tmpFile.toUri())
+                    onSuccess(tmpFile.toUri())
                 } catch (e: Exception) {
                     Logger.e("", e)
-                    onResult(null)
+                    onError()
                 }
             }
         } else {
-            Logger.e("GalleryPicker result error: ${it.resultCode}, uri: $uri")
-            onResult(null)
+            Logger.e("GalleryProvider result error: ${resultCode}, uri: $uri")
+            onError()
         }
     }
 
-    fun launch(request: PickRequest) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            // Don't react on activity recreation
+            return
+        }
+        launch()
+    }
+
+    private fun launch() {
         val intent = createPickIntent(request.filter)
-        if (intent.resolveActivity(activity.packageManager) != null) {
-            Logger.i("GalleryPicker intent resolveActivity OK")
+        if (intent.resolveActivity(packageManager) != null) {
+            Logger.i("GalleryProvider intent resolveActivity OK")
             launcher.launch(intent)
         } else {
-            Logger.e("GalleryPicker intent resolveActivity error")
-            onResult(null)
+            Logger.e("GalleryProvider intent resolveActivity error")
+            onError()
         }
     }
 

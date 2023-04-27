@@ -3,6 +3,7 @@
     <!-- Must be the same as in Manifest -->
     <string name="file_provider_name" translatable="false">.file_provider</string>
 
+    <string name="ipp_camera_permission_allow">Please allow Camera permission</string>
     <string name="ipp_camera_permission_go_to_settings">Please allow Camera permission in settings</string>
 
 </resources>

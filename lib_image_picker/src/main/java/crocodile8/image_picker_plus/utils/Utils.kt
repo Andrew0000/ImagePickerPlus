@@ -120,7 +120,7 @@ private fun String?.getFileExt(): String? {
     return null
 }
 
-fun Closeable.closeSilent() =
+internal fun Closeable.closeSilent() =
     try {
         close()
     } catch (e: Exception) {
