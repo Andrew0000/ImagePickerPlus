@@ -72,6 +72,7 @@ internal object Utils {
     }
 
     private fun getTmpDir(context: Context): File {
+        // Don't forget file_provider_paths.xml if change
         val dir = File(context.cacheDir.absolutePath + "${separator}image_picker_plus_cache")
         if (!dir.exists()) {
             dir.mkdirs()
