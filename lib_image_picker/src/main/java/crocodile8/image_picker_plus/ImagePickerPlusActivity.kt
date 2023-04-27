@@ -9,7 +9,7 @@ import crocodile8.image_picker_plus.processor.CropProcessor
 import crocodile8.image_picker_plus.processor.SizeProcessor
 import crocodile8.image_picker_plus.provider.CameraProvider
 import crocodile8.image_picker_plus.provider.GalleryProvider
-import crocodile8.image_picker_plus.provider.StartActivityForResultProvider
+import crocodile8.image_picker_plus.provider.Provider
 import crocodile8.image_picker_plus.utils.Logger
 import crocodile8.image_picker_plus.utils.Utils
 
@@ -20,7 +20,7 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
         intent?.getSerializableExtra(REQUEST_SPEC) as PickRequest
     }
 
-    private lateinit var provider: StartActivityForResultProvider
+    private lateinit var provider: Provider
 
     private val sizeProcessor by lazy {
         SizeProcessor(this) {
@@ -60,22 +60,12 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
         provider.onCreate(savedInstanceState)
     }
 
-    override fun onResume() {
-        super.onResume()
-        provider.onResume()
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean(SAVED_SIZED, sized)
         outState.putBoolean(SAVED_CROPPED, cropped)
         Logger.i("onSaveInstanceState, sized: $sized, cropped: $cropped")
         provider.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        provider.onRestoreInstanceState(savedInstanceState)
     }
 
     private fun routeResult(uri: Uri?) {

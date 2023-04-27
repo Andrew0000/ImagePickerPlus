@@ -27,29 +27,28 @@ internal class CameraProvider(
     activity: ComponentActivity,
     request: PickRequest,
     onResult: (Uri?, Throwable?) -> Unit,
-) : StartActivityForResultProvider(activity, request, onResult) {
+) : Provider(activity, request, onResult) {
 
     private var tmpFile: File? = null
 
-    private var waitingSettings = false
-
     private val permissionLauncher = activity.registerForActivityResult(RequestPermission()) {
         if (needPermission()) {
+            Logger.i("CameraProvider permissionLauncher -> needPermission")
             if (activity.shouldRequestRationale(Manifest.permission.CAMERA)) {
                 Toast.makeText(context, R.string.ipp_camera_permission_allow, Toast.LENGTH_LONG).show()
                 onError()
             } else {
                 // Probably "never ask again"
                 Toast.makeText(context, R.string.ipp_camera_permission_go_to_settings, Toast.LENGTH_LONG).show()
-                waitingSettings = true
                 activity.launchAppSettings()
+                onError()
             }
         } else {
             launch()
         }
     }
 
-    override fun onResult(resultCode: Int, intent: Intent?) {
+    override fun onActivityResult(resultCode: Int, intent: Intent?) {
         val uri = intent?.data
         val tmpUri = Uri.fromFile(tmpFile)
         Logger.i("CameraProvider uri: $uri / $tmpUri")
@@ -63,7 +62,7 @@ internal class CameraProvider(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
-            // Don't react on activity recreation
+            savedInstanceState.getString(SAVED_FILE)?.let { tmpFile = File(it) }
             return
         }
         if (!haveCamera()) {
@@ -78,27 +77,9 @@ internal class CameraProvider(
         launch()
     }
 
-    override fun onResume() {
-        if (waitingSettings) {
-            if (needPermission()) {
-                onError()
-            } else {
-                waitingSettings = false
-                launch()
-            }
-        }
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         Logger.i("CameraProvider onSaveInstanceState, tmpFile: $tmpFile")
         tmpFile?.let { outState.putString(SAVED_FILE, it.path) }
-        outState.putBoolean(WAIT_SETTINGS, waitingSettings)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        Logger.i("CameraProvider onRestoreInstanceState: $savedInstanceState")
-        savedInstanceState.getString(SAVED_FILE)?.let { tmpFile = File(it) }
-        waitingSettings = savedInstanceState.getBoolean(WAIT_SETTINGS)
     }
 
     private fun needPermission() =
@@ -135,6 +116,5 @@ internal class CameraProvider(
 
     companion object {
         private const val SAVED_FILE = "camera_picker_saved_file"
-        private const val WAIT_SETTINGS = "camera_picker_wait_settings"
     }
 }

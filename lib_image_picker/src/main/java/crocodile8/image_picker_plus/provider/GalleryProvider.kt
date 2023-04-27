@@ -19,9 +19,9 @@ internal class GalleryProvider(
     activity: ComponentActivity,
     request: PickRequest,
     onResult: (Uri?, Throwable?) -> Unit,
-) : StartActivityForResultProvider(activity, request, onResult) {
+) : Provider(activity, request, onResult) {
 
-    override fun onResult(resultCode: Int, intent: Intent?) {
+    override fun onActivityResult(resultCode: Int, intent: Intent?) {
         val uri = intent?.data
         Logger.i("GalleryProvider uri: $uri")
         if (resultCode == Activity.RESULT_OK && uri != null) {
