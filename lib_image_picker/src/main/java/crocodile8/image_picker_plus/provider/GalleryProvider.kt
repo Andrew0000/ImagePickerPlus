@@ -1,4 +1,4 @@
-package crocodile8.image_picker_plus.picker
+package crocodile8.image_picker_plus.provider
 
 import android.app.Activity
 import android.content.Intent

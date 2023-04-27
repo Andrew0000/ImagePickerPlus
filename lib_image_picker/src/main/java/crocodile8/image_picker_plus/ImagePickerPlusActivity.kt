@@ -8,10 +8,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.appcompat.app.AppCompatActivity
-import crocodile8.image_picker_plus.picker.CameraProvider
-import crocodile8.image_picker_plus.picker.GalleryProvider
 import crocodile8.image_picker_plus.processor.CropProcessor
 import crocodile8.image_picker_plus.processor.SizeProcessor
+import crocodile8.image_picker_plus.provider.CameraProvider
+import crocodile8.image_picker_plus.provider.GalleryProvider
 import crocodile8.image_picker_plus.utils.Logger
 import crocodile8.image_picker_plus.utils.Utils
 import crocodile8.image_picker_plus.utils.isCameraPermissionDeclared
