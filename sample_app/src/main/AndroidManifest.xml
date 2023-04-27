@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!--
+    Optional: https://developer.android.com/reference/android/provider/MediaStore#ACTION_IMAGE_CAPTURE
+    Quotation:
+     if you app targets M and above and declares as using the Manifest.permission.CAMERA permission
+     which is not granted, then attempting to use this action will result in a SecurityException. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
