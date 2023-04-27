@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.appcompat.app.AppCompatActivity
 import crocodile8.image_picker_plus.picker.CameraProvider
-import crocodile8.image_picker_plus.picker.GalleryPicker
+import crocodile8.image_picker_plus.picker.GalleryProvider
 import crocodile8.image_picker_plus.processor.CropProcessor
 import crocodile8.image_picker_plus.processor.SizeProcessor
 import crocodile8.image_picker_plus.utils.Logger
@@ -41,8 +41,8 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
         }
     }
 
-    private val galleryPicker by lazy {
-        GalleryPicker(this) {
+    private val galleryProvider by lazy {
+        GalleryProvider(this) {
             routeResult(it)
         }
     }
@@ -94,9 +94,9 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
         }
         when (request.source) {
             PickSource.GALLERY -> {
-                galleryPicker // initialization
+                galleryProvider // initialization
                 if (!launchedBefore) {
-                    galleryPicker.launch(request)
+                    galleryProvider.launch(request)
                 }
             }
             PickSource.CAMERA -> {

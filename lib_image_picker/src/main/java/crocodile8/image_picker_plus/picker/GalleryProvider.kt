@@ -15,7 +15,7 @@ import crocodile8.image_picker_plus.utils.getExtOrJpeg
 
 // https://developer.android.com/training/data-storage/shared/documents-files#bitmap
 
-internal class GalleryPicker(
+internal class GalleryProvider(
     private val activity: ComponentActivity,
     private val onResult: (Uri?) -> Unit,
 ) {
