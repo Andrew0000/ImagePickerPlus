@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.appcompat.app.AppCompatActivity
-import crocodile8.image_picker_plus.picker.CameraPicker
+import crocodile8.image_picker_plus.picker.CameraProvider
 import crocodile8.image_picker_plus.picker.GalleryPicker
 import crocodile8.image_picker_plus.processor.CropProcessor
 import crocodile8.image_picker_plus.processor.SizeProcessor
@@ -30,7 +30,7 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
             if (isCameraPermissionGranted()) {
                 waitingCameraPermission = false
                 waitingCameraPermissionSettings = false
-                cameraPicker.launch(request)
+                cameraProvider.launch(request)
             } else {
                 Toast.makeText(this, R.string.ipp_camera_permission_go_to_settings, Toast.LENGTH_LONG).show()
                 waitingCameraPermissionSettings = true
@@ -47,8 +47,8 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
         }
     }
 
-    private val cameraPicker by lazy {
-        CameraPicker(this) {
+    private val cameraProvider by lazy {
+        CameraProvider(this) {
             routeResult(it)
         }
     }
@@ -100,7 +100,7 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
                 }
             }
             PickSource.CAMERA -> {
-                cameraPicker // initialization
+                cameraProvider // initialization
                 if (!launchedBefore) {
                     val cameraPermissionDeclared = isCameraPermissionDeclared()
                     Logger.d("cameraPermissionDeclared: $cameraPermissionDeclared")
@@ -108,7 +108,7 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
                         waitingCameraPermission = true
                         requestPermissionLauncher.launch(Manifest.permission.CAMERA)
                     } else {
-                        cameraPicker.launch(request)
+                        cameraProvider.launch(request)
                     }
                 }
             }
@@ -120,7 +120,7 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
         if (waitingCameraPermissionSettings) {
             if (isCameraPermissionGranted()) {
                 waitingCameraPermissionSettings = false
-                cameraPicker.launch(request)
+                cameraProvider.launch(request)
             } else {
                 finishAsCancelled()
             }
@@ -141,7 +141,7 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
                 // Empty
             }
             PickSource.CAMERA -> {
-                cameraPicker.onSaveInstanceState(outState)
+                cameraProvider.onSaveInstanceState(outState)
             }
         }
     }
@@ -153,7 +153,7 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
                 // Empty
             }
             PickSource.CAMERA -> {
-                cameraPicker.onRestoreInstanceState(savedInstanceState)
+                cameraProvider.onRestoreInstanceState(savedInstanceState)
             }
         }
     }

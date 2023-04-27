@@ -17,7 +17,7 @@ import java.io.File
 
 //https://developer.android.com/training/camera-deprecated/photobasics#TaskPath
 
-internal class CameraPicker(
+internal class CameraProvider(
     activity: ComponentActivity,
     private val onResult: (Uri?) -> Unit,
 ) {
