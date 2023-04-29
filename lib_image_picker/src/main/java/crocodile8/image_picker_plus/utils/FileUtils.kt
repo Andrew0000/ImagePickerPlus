@@ -10,6 +10,9 @@ object FileUtils {
 
     private val separator = File.separator
 
+    /**
+     * Typical usage: copy a file from some content provider to a local cache directory.
+     */
     @Throws
     fun copyUriContentToFile(context: Context, uri: Uri, file: File) {
         @SuppressLint("Recycle") // False positive, inputStream is closed with .closeSilent()
