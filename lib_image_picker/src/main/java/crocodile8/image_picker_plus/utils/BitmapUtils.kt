@@ -25,7 +25,7 @@ object BitmapUtils {
                 val file = Utils.createEmptyLocalUniqueFile(context, ext)
                 Logger.d("resize file: $file")
                 if (file != null) {
-                    bitmap.compress(Utils.mapCompressFormat(ext), 80, file.outputStream())
+                    bitmap.compress(ImageFormatUtils.mapCompressFormat(ext), 80, file.outputStream())
                     bitmap.recycle()
                     onResult(file.toUri())
                 } else {

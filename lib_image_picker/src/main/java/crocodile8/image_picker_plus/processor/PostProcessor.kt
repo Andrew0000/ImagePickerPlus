@@ -9,6 +9,7 @@ import androidx.core.net.toUri
 import com.yalantis.ucrop.UCrop
 import crocodile8.image_picker_plus.ImageFormat
 import crocodile8.image_picker_plus.PickRequest
+import crocodile8.image_picker_plus.utils.ImageFormatUtils
 import crocodile8.image_picker_plus.utils.Logger
 import crocodile8.image_picker_plus.utils.Utils
 import crocodile8.image_picker_plus.utils.getExt
@@ -77,7 +78,7 @@ internal class PostProcessor(
         if (encodeToFormat != null) {
             setCompressionFormat(encodeToFormat.toCompressFormat())
         } else {
-            setCompressionFormat(Utils.mapCompressFormat(ext))
+            setCompressionFormat(ImageFormatUtils.mapCompressFormat(ext))
         }
     }
 

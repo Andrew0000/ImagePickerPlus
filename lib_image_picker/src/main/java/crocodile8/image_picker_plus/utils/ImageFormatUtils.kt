@@ -5,6 +5,29 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import crocodile8.image_picker_plus.ImageFormat
 
+object ImageFormatUtils {
+
+    fun mapCompressFormat(ext: String): Bitmap.CompressFormat {
+        return when {
+            ext.contains("png", ignoreCase = true) -> {
+                Bitmap.CompressFormat.PNG
+            }
+            ext.contains("webp", ignoreCase = true) -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    Bitmap.CompressFormat.WEBP_LOSSLESS
+                } else {
+                    @Suppress("DEPRECATION")
+                    Bitmap.CompressFormat.WEBP
+                }
+            }
+            else -> {
+                Bitmap.CompressFormat.JPEG
+            }
+        }
+    }
+
+}
+
 @Suppress("DEPRECATION")
 fun ImageFormat.toCompressFormat() = when (this) {
     ImageFormat.JPEG -> Bitmap.CompressFormat.JPEG

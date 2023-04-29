@@ -2,9 +2,7 @@ package crocodile8.image_picker_plus.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import java.io.Closeable
 import java.io.File
 import java.io.IOException
@@ -23,25 +21,6 @@ object Utils {
         } finally {
             inputStream.closeSilent()
             outputStream.closeSilent()
-        }
-    }
-
-    fun mapCompressFormat(ext: String): Bitmap.CompressFormat {
-        return when {
-            ext.contains("png", ignoreCase = true) -> {
-                Bitmap.CompressFormat.PNG
-            }
-            ext.contains("webp", ignoreCase = true) -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    Bitmap.CompressFormat.WEBP_LOSSLESS
-                } else {
-                    @Suppress("DEPRECATION")
-                    Bitmap.CompressFormat.WEBP
-                }
-            }
-            else -> {
-                Bitmap.CompressFormat.JPEG
-            }
         }
     }
 
