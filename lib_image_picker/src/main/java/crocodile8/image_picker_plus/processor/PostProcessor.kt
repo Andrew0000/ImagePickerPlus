@@ -78,7 +78,7 @@ internal class PostProcessor(
         if (encodeToFormat != null) {
             setCompressionFormat(encodeToFormat.toCompressFormat())
         } else {
-            setCompressionFormat(ImageFormatUtils.mapCompressFormat(ext))
+            setCompressionFormat(ImageFormatUtils.getCompressFormat(ext))
         }
     }
 

@@ -7,7 +7,7 @@ import crocodile8.image_picker_plus.ImageFormat
 
 object ImageFormatUtils {
 
-    fun mapCompressFormat(ext: String): Bitmap.CompressFormat {
+    fun getCompressFormat(ext: String): Bitmap.CompressFormat {
         return when {
             ext.contains("png", ignoreCase = true) -> {
                 Bitmap.CompressFormat.PNG
