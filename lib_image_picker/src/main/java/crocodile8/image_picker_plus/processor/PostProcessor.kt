@@ -53,26 +53,32 @@ internal class PostProcessor(
 
         val uCrop = UCrop
             .of(uri, Uri.fromFile(file))
-            .let {
-                val maxSidePx = request.transformation.maxSidePx
-                if (maxSidePx > 0) {
-                    it.withMaxResultSize(maxSidePx, maxSidePx,)
-                } else {
-                    it
-                }
-            }
+            .applyMaxSideLimit()
             .withOptions(
                 UCrop.Options().apply {
-                    val encodeToFormat = request.transformation.encodeToFormat
-                    if (encodeToFormat != null) {
-                        setCompressionFormat(encodeToFormat.toCompressFormat())
-                    } else {
-                        setCompressionFormat(Utils.mapCompressFormat(ext))
-                    }
+                    applyFormatRestriction(ext)
                 }
             )
 
         launcher.launch(uCrop.getIntent(context))
+    }
+
+    private fun UCrop.applyMaxSideLimit() = let {
+        val maxSidePx = request.transformation.maxSidePx
+        if (maxSidePx > 0) {
+            it.withMaxResultSize(maxSidePx, maxSidePx,)
+        } else {
+            it
+        }
+    }
+
+    private fun UCrop.Options.applyFormatRestriction(ext: String) {
+        val encodeToFormat = request.transformation.encodeToFormat
+        if (encodeToFormat != null) {
+            setCompressionFormat(encodeToFormat.toCompressFormat())
+        } else {
+            setCompressionFormat(Utils.mapCompressFormat(ext))
+        }
     }
 
     private fun renameFileExtIfNeeded(uri: Uri, requiredFormat: ImageFormat?): Uri {
