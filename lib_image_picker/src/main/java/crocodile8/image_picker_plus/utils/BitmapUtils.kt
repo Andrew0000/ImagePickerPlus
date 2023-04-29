@@ -1,8 +1,12 @@
 package crocodile8.image_picker_plus.utils
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.net.Uri
+import androidx.core.net.toFile
+import androidx.core.net.toUri
 import androidx.exifinterface.media.ExifInterface
 import java.io.File
 
@@ -10,6 +14,29 @@ import java.io.File
  * https://developer.android.com/topic/performance/graphics/load-bitmap
  */
 object BitmapUtils {
+
+    fun resize(uri: Uri, context: Context, maxSidePx: Int, onResult: (Uri?) -> Unit) {
+        if (maxSidePx > 0) {
+            try {
+                val bitmap = decodeScaledBitmapFromFile(uri.toFile(), maxSidePx)
+                val ext = uri.getExtOrJpeg(context)
+                val file = Utils.createEmptyLocalUniqueFile(context, ext)
+                Logger.d("resize file: $file")
+                if (file != null) {
+                    bitmap.compress(Utils.mapCompressFormat(ext), 80, file.outputStream())
+                    bitmap.recycle()
+                    onResult(file.toUri())
+                } else {
+                    onResult(null)
+                }
+            } catch (e: Exception) {
+                Logger.e("SizeProcessor error", e)
+                onResult(null)
+            }
+        } else {
+            onResult(uri)
+        }
+    }
 
     fun decodeScaledBitmapFromFile(imageFile: File, maxSide: Int): Bitmap {
         Logger.d("decodeScaledBitmapFromFile: $imageFile")

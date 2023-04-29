@@ -34,10 +34,10 @@
             android:text="Limit image side to 50 px"/>
 
         <CheckBox
-            android:id="@+id/cbUseCrop"
+            android:id="@+id/cbForceWebP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Use Crop"/>
+            android:text="Force to WebP"/>
 
         <ImageView
             android:id="@+id/imageView1"

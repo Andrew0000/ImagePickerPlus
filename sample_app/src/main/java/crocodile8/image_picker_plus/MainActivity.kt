@@ -2,6 +2,7 @@ package crocodile8.image_picker_plus
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
@@ -14,10 +15,11 @@ class MainActivity : AppCompatActivity() {
     private val btnGallery by lazy { findViewById<Button>(R.id.btnGallery) }
     private val btnCamera by lazy { findViewById<Button>(R.id.btnCamera) }
     private val cbSize by lazy { findViewById<CheckBox>(R.id.cbSize) }
-    private val cbUseCrop by lazy { findViewById<CheckBox>(R.id.cbUseCrop) }
+    private val cbForceWebP by lazy { findViewById<CheckBox>(R.id.cbForceWebP) }
 
     private val launcher = registerForActivityResult(StartActivityForResult()) {
         it?.data?.data?.let { uri ->
+            Log.e("IPP", "result: $uri")
             imageView1.setImageURI(uri)
         }
     }
@@ -32,8 +34,7 @@ class MainActivity : AppCompatActivity() {
                 activity = this,
                 PickRequest(
                     source = PickSource.GALLERY,
-                    maxSidePx = getSize(),
-                    useCrop = cbUseCrop.isChecked,
+                    transformation = getTransformation(),
                 )
             ).let { launcher.launch(it) }
         }
@@ -43,17 +44,24 @@ class MainActivity : AppCompatActivity() {
                 activity = this,
                 PickRequest(
                     source = PickSource.CAMERA,
-                    maxSidePx = getSize(),
-                    useCrop = cbUseCrop.isChecked,
+                    transformation = getTransformation(),
                 )
             ).let { launcher.launch(it) }
         }
     }
 
-    private fun getSize() =
-        if (cbSize.isChecked) {
-           50
-        } else {
-            2048
-        }
+    private fun getTransformation() =
+        ImageTransformation(
+            maxSidePx = if (cbSize.isChecked) {
+                50
+            } else {
+                -1
+            },
+            encodeToFormat = if (cbForceWebP.isChecked) {
+                ImageFormat.WEBP
+            } else {
+                null
+            },
+        )
+
 }

@@ -5,8 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import crocodile8.image_picker_plus.processor.CropProcessor
-import crocodile8.image_picker_plus.processor.SizeProcessor
+import crocodile8.image_picker_plus.processor.PostProcessor
 import crocodile8.image_picker_plus.provider.CameraProvider
 import crocodile8.image_picker_plus.provider.GalleryProvider
 import crocodile8.image_picker_plus.provider.Provider
@@ -22,59 +21,41 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
 
     private lateinit var provider: Provider
 
-    private val sizeProcessor by lazy {
-        SizeProcessor(this) {
-            sized = true
-            routeResult(it)
-        }
-    }
+    private lateinit var postProcessor: PostProcessor
 
-    private val cropProcessor by lazy {
-        CropProcessor(this) {
-            cropped = true
-            routeResult(it)
-        }
-    }
-
-    private var sized = false
-    private var cropped = false
+    private var postProcessed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val launchedBefore = savedInstanceState != null // if activity recreation
         Logger.i("ImagePickerPlusActivity onCreate request: $request")
 
-        savedInstanceState?.getBoolean(SAVED_SIZED)?.let { sized = it }
-        savedInstanceState?.getBoolean(SAVED_CROPPED)?.let { cropped = it }
-        Logger.i("ImagePickerPlusActivity onCreate, sized: $sized, cropped: $cropped")
+        savedInstanceState?.getBoolean(SAVED_POST_PROCESSED)?.let { postProcessed = it }
+        Logger.i("ImagePickerPlusActivity onCreate, postProcessed: $postProcessed")
 
+        val launchedBefore = savedInstanceState != null // if activity recreation
         if (!launchedBefore && request.clearPreviousCache) {
             Utils.clearTmpDir(applicationContext)
         }
 
-        if (request.useCrop) {
-            cropProcessor // initialization
-        }
-
         provider = getProvider()
         provider.onCreate(savedInstanceState)
+        postProcessor = PostProcessor(this, request) {
+            postProcessed = true
+            routeResult(it)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean(SAVED_SIZED, sized)
-        outState.putBoolean(SAVED_CROPPED, cropped)
-        Logger.i("onSaveInstanceState, sized: $sized, cropped: $cropped")
+        outState.putBoolean(SAVED_POST_PROCESSED, postProcessed)
+        Logger.i("onSaveInstanceState, postProcessed: $postProcessed")
         provider.onSaveInstanceState(outState)
     }
 
     private fun routeResult(uri: Uri?) {
         when {
-            uri != null && request.maxSidePx > 0 && !sized -> {
-                sizeProcessor.launch(uri, request)
-            }
-            uri != null && request.useCrop && !cropped -> {
-                cropProcessor.launch(uri)
+            uri != null && request.transformation.isNotEmpty() && !postProcessed -> {
+                postProcessor.launch(uri)
             }
             else -> {
                 finishWithResult(uri)
@@ -119,7 +100,6 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
 
     companion object {
         const val REQUEST_SPEC = "request_spec"
-        private const val SAVED_SIZED = "camera_picker_activity_saved_sized"
-        private const val SAVED_CROPPED = "camera_picker_activity_saved_cropped"
+        private const val SAVED_POST_PROCESSED = "camera_picker_activity_saved_post_processed"
     }
 }
