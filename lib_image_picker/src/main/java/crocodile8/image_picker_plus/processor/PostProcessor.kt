@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toFile
 import androidx.core.net.toUri
 import com.yalantis.ucrop.UCrop
+import crocodile8.image_picker_plus.ImageFormat
 import crocodile8.image_picker_plus.PickRequest
 import crocodile8.image_picker_plus.utils.Logger
 import crocodile8.image_picker_plus.utils.Utils
@@ -31,22 +32,7 @@ internal class PostProcessor(
         }
         Logger.i("uri: $uri / $data")
         if (it.resultCode == Activity.RESULT_OK && uri != null) {
-            var finalUri = uri
-            if (request.transformation.encodeToFormat != null) {
-                val ext = uri.getExt(context)
-                val requiredExt = request.transformation.encodeToFormat.ext
-                if (ext != requiredExt) {
-                    try {
-                        val originalFIle = uri.toFile()
-                        val newFile = File(originalFIle.path + ".$requiredExt")
-                        originalFIle.renameTo(newFile)
-                        finalUri = newFile.toUri()
-                        Logger.d("Renamed OK: $finalUri")
-                    } catch (e: Exception) {
-                        Logger.e("", e)
-                    }
-                }
-            }
+            val finalUri = renameFileExtIfNeeded(uri, request.transformation.encodeToFormat)
             onResult(finalUri)
         } else {
             Logger.e("CropProcessor result error: ${it.resultCode}, uri: $uri")
@@ -88,4 +74,26 @@ internal class PostProcessor(
 
         launcher.launch(uCrop.getIntent(context))
     }
+
+    private fun renameFileExtIfNeeded(uri: Uri, requiredFormat: ImageFormat?): Uri {
+        if (requiredFormat == null) {
+            return uri
+        }
+        val ext = uri.getExt(context)
+        val requiredExt = requiredFormat.ext
+        if (ext != requiredExt) {
+            try {
+                val originalFIle = uri.toFile()
+                val newFile = File(originalFIle.path + ".$requiredExt")
+                originalFIle.renameTo(newFile)
+                val finalUri = newFile.toUri()
+                Logger.d("Renamed OK: $finalUri")
+                return finalUri
+            } catch (e: Exception) {
+                Logger.e("", e)
+            }
+        }
+        return uri
+    }
+
 }
