@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.webkit.MimeTypeMap
 
-internal fun Uri.getExtOrJpeg(context: Context): String {
+fun Uri.getExtOrJpeg(context: Context): String {
     val ext = getExt(context)
     if (!ext.isNullOrEmpty()) {
         return ext
@@ -13,7 +13,7 @@ internal fun Uri.getExtOrJpeg(context: Context): String {
     return "jpg"
 }
 
-internal fun Uri.getExt(context: Context): String? {
+fun Uri.getExt(context: Context): String? {
     val mime = context.contentResolver.getType(this)
     Logger.d("Uri.getExt: $this, mime: $mime")
     if (mime != null) {

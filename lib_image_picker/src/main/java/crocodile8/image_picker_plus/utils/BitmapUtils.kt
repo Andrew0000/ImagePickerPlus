@@ -1,3 +1,5 @@
+@file:Suppress("Unused", "MemberVisibilityCanBePrivate")
+
 package crocodile8.image_picker_plus.utils
 
 import android.content.Context

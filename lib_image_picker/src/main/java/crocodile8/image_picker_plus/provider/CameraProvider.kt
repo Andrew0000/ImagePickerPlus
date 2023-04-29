@@ -23,7 +23,7 @@ import java.io.File
 
 //https://developer.android.com/training/camera-deprecated/photobasics#TaskPath
 
-internal class CameraProvider(
+class CameraProvider(
     activity: ComponentActivity,
     request: PickRequest,
     onResult: (Uri?, Throwable?) -> Unit,

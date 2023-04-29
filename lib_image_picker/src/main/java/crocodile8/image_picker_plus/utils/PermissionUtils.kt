@@ -10,7 +10,7 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.core.content.ContextCompat
 
-internal fun Context.isCameraPermissionGranted(): Boolean =
+fun Context.isCameraPermissionGranted(): Boolean =
     ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
 
 /**
@@ -20,10 +20,10 @@ internal fun Context.isCameraPermissionGranted(): Boolean =
  * if you app targets M and above and declares as using the Manifest.permission.CAMERA permission
  * which is not granted, then attempting to use this action will result in a SecurityException.
  */
-internal fun Context.isCameraPermissionDeclared(): Boolean =
+fun Context.isCameraPermissionDeclared(): Boolean =
     isPermissionDeclared(Manifest.permission.CAMERA)
 
-internal fun Context.isPermissionDeclared(permission: String): Boolean {
+fun Context.isPermissionDeclared(permission: String): Boolean {
     try {
         @Suppress("DEPRECATION")
         val info: PackageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
@@ -40,7 +40,7 @@ internal fun Context.isPermissionDeclared(permission: String): Boolean {
     return false
 }
 
-internal fun Activity.launchAppSettings() {
+fun Activity.launchAppSettings() {
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
     val uri = Uri.fromParts("package", packageName, null)
     intent.data = uri

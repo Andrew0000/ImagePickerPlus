@@ -26,7 +26,7 @@ object ImagePickerPlus {
         activity.startActivityForResult(createIntent(activity, request), requestCode)
     }
 
-    fun clearCache(context: Context) {
+    fun clearDiskCache(context: Context) {
         Utils.clearTmpDir(context)
     }
 

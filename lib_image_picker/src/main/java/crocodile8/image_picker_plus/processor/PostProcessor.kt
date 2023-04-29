@@ -66,7 +66,7 @@ internal class PostProcessor(
     private fun UCrop.applyMaxSideLimit() = let {
         val maxSidePx = request.transformation.maxSidePx
         if (maxSidePx > 0) {
-            it.withMaxResultSize(maxSidePx, maxSidePx,)
+            it.withMaxResultSize(maxSidePx, maxSidePx)
         } else {
             it
         }

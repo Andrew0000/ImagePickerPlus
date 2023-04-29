@@ -9,21 +9,9 @@ import java.io.Closeable
 import java.io.File
 import java.io.IOException
 
-internal object Utils {
+object Utils {
 
     private val separator = File.separator
-
-    fun clearTmpDir(context: Context) {
-        try {
-            val listFiles = getTmpDir(context).listFiles()
-            Logger.d("clearTmpDir: ${listFiles?.size}")
-            listFiles?.forEach {
-                it.delete()
-            }
-        } catch (e: IOException) {
-            Logger.e("clearTmpDir", e)
-        }
-    }
 
     @Throws
     fun copyUriContentToFile(context: Context, uri: Uri, file: File) {
@@ -37,18 +25,6 @@ internal object Utils {
             outputStream.closeSilent()
         }
     }
-
-    fun createEmptyLocalUniqueFile(context: Context, ext: String = "jpg"): File? =
-        try {
-            val fileName = "tmp_${System.currentTimeMillis()}"
-            val fileNameFull = "$fileName.$ext"
-            val file = File(getTmpDir(context), fileNameFull)
-            file.createNewFile()
-            file
-        } catch (e: IOException) {
-            Logger.e("", e)
-            null
-        }
 
     fun mapCompressFormat(ext: String): Bitmap.CompressFormat {
         return when {
@@ -69,6 +45,30 @@ internal object Utils {
         }
     }
 
+    internal fun clearTmpDir(context: Context) {
+        try {
+            val listFiles = getTmpDir(context).listFiles()
+            Logger.d("clearTmpDir: ${listFiles?.size}")
+            listFiles?.forEach {
+                it.delete()
+            }
+        } catch (e: IOException) {
+            Logger.e("clearTmpDir", e)
+        }
+    }
+
+    internal fun createEmptyLocalUniqueFile(context: Context, ext: String = "jpg"): File? =
+        try {
+            val fileName = "tmp_${System.currentTimeMillis()}"
+            val fileNameFull = "$fileName.$ext"
+            val file = File(getTmpDir(context), fileNameFull)
+            file.createNewFile()
+            file
+        } catch (e: IOException) {
+            Logger.e("", e)
+            null
+        }
+
     private fun getTmpDir(context: Context): File {
         // Don't forget file_provider_paths.xml if change
         val dir = File(context.cacheDir.absolutePath + "${separator}image_picker_plus_cache")
@@ -79,7 +79,7 @@ internal object Utils {
     }
 }
 
-internal fun Closeable.closeSilent() =
+fun Closeable.closeSilent() =
     try {
         close()
     } catch (e: Exception) {

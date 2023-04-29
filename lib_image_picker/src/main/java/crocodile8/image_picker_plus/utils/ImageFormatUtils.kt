@@ -12,6 +12,7 @@ fun ImageFormat.toCompressFormat() = when (this) {
     ImageFormat.WEBP -> Bitmap.CompressFormat.WEBP
 }
 
+@Suppress("Unused")
 fun Bitmap.CompressFormat.asStringExt() =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         asStringExtNew()
@@ -20,6 +21,7 @@ fun Bitmap.CompressFormat.asStringExt() =
     }
 
 @RequiresApi(Build.VERSION_CODES.R)
+@Suppress("DEPRECATION")
 private fun Bitmap.CompressFormat.asStringExtNew() = when (this) {
     Bitmap.CompressFormat.PNG -> "png"
     Bitmap.CompressFormat.WEBP,
