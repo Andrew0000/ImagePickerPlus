@@ -3,7 +3,7 @@ package crocodile8.image_picker_plus.processor
 import android.app.Activity
 import android.net.Uri
 import androidx.activity.ComponentActivity
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.net.toFile
 import androidx.core.net.toUri
 import com.yalantis.ucrop.UCrop
@@ -24,7 +24,7 @@ internal class PostProcessor(
 ) {
     private val context = activity.applicationContext
 
-    private val launcher = activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private val launcher = activity.registerForActivityResult(StartActivityForResult()) {
         val data = it.data
         val uri = if (data != null) {
             UCrop.getOutput(data)
