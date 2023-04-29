@@ -14,7 +14,7 @@ import androidx.core.content.FileProvider
 import crocodile8.image_picker_plus.PickRequest
 import crocodile8.image_picker_plus.R
 import crocodile8.image_picker_plus.utils.Logger
-import crocodile8.image_picker_plus.utils.Utils.createEmptyLocalUniqueFile
+import crocodile8.image_picker_plus.utils.FileUtils.createEmptyLocalUniqueFile
 import crocodile8.image_picker_plus.utils.isCameraPermissionDeclared
 import crocodile8.image_picker_plus.utils.isCameraPermissionGranted
 import crocodile8.image_picker_plus.utils.launchAppSettings

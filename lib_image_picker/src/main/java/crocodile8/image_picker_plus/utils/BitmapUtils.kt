@@ -22,7 +22,7 @@ object BitmapUtils {
             try {
                 val bitmap = decodeScaledBitmapFromFile(uri.toFile(), maxSidePx)
                 val ext = uri.getExtOrJpeg(context)
-                val file = Utils.createEmptyLocalUniqueFile(context, ext)
+                val file = FileUtils.createEmptyLocalUniqueFile(context, ext)
                 Logger.d("resize file: $file")
                 if (file != null) {
                     bitmap.compress(ImageFormatUtils.getCompressFormat(ext), 80, file.outputStream())

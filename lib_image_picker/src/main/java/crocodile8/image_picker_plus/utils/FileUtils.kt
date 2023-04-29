@@ -6,7 +6,7 @@ import android.net.Uri
 import java.io.File
 import java.io.IOException
 
-object Utils {
+object FileUtils {
 
     private val separator = File.separator
 

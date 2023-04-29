@@ -10,7 +10,7 @@ import crocodile8.image_picker_plus.provider.CameraProvider
 import crocodile8.image_picker_plus.provider.GalleryProvider
 import crocodile8.image_picker_plus.provider.Provider
 import crocodile8.image_picker_plus.utils.Logger
-import crocodile8.image_picker_plus.utils.Utils
+import crocodile8.image_picker_plus.utils.FileUtils
 
 internal class ImagePickerPlusActivity : AppCompatActivity() {
 
@@ -34,7 +34,7 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
 
         val launchedBefore = savedInstanceState != null // if activity recreation
         if (!launchedBefore && request.clearPreviousCache) {
-            Utils.clearTmpDir(applicationContext)
+            FileUtils.clearTmpDir(applicationContext)
         }
 
         provider = getProvider()

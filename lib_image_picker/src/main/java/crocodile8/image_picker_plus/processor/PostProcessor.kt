@@ -11,7 +11,7 @@ import crocodile8.image_picker_plus.ImageFormat
 import crocodile8.image_picker_plus.PickRequest
 import crocodile8.image_picker_plus.utils.ImageFormatUtils
 import crocodile8.image_picker_plus.utils.Logger
-import crocodile8.image_picker_plus.utils.Utils
+import crocodile8.image_picker_plus.utils.FileUtils
 import crocodile8.image_picker_plus.utils.getExt
 import crocodile8.image_picker_plus.utils.getExtOrJpeg
 import crocodile8.image_picker_plus.utils.toCompressFormat
@@ -43,7 +43,7 @@ internal class PostProcessor(
 
     fun launch(uri: Uri) {
         val ext = uri.getExtOrJpeg(context)
-        val file = Utils.createEmptyLocalUniqueFile(context, ext)
+        val file = FileUtils.createEmptyLocalUniqueFile(context, ext)
         Logger.d("CropProcessor launch file: $file")
 
         if (file == null || !file.exists()) {

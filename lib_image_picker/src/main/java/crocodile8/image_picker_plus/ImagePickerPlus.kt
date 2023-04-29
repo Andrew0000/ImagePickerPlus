@@ -6,7 +6,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import crocodile8.image_picker_plus.utils.Utils
+import crocodile8.image_picker_plus.utils.FileUtils
 
 object ImagePickerPlus {
 
@@ -27,7 +27,7 @@ object ImagePickerPlus {
     }
 
     fun clearDiskCache(context: Context) {
-        Utils.clearTmpDir(context)
+        FileUtils.clearTmpDir(context)
     }
 
     private fun createBundle(request: PickRequest) =

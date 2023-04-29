@@ -9,8 +9,8 @@ import androidx.core.net.toUri
 import crocodile8.image_picker_plus.PickRequest
 import crocodile8.image_picker_plus.TypeFilter
 import crocodile8.image_picker_plus.utils.Logger
-import crocodile8.image_picker_plus.utils.Utils.copyUriContentToFile
-import crocodile8.image_picker_plus.utils.Utils.createEmptyLocalUniqueFile
+import crocodile8.image_picker_plus.utils.FileUtils.copyUriContentToFile
+import crocodile8.image_picker_plus.utils.FileUtils.createEmptyLocalUniqueFile
 import crocodile8.image_picker_plus.utils.getExtOrJpeg
 
 // https://developer.android.com/training/data-storage/shared/documents-files#bitmap
