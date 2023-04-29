@@ -3,7 +3,6 @@ package crocodile8.image_picker_plus.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
-import java.io.Closeable
 import java.io.File
 import java.io.IOException
 
@@ -57,10 +56,3 @@ object Utils {
         return dir
     }
 }
-
-fun Closeable.closeSilent() =
-    try {
-        close()
-    } catch (e: Exception) {
-        // Ignore
-    }
