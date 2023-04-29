@@ -54,7 +54,7 @@ internal class ImagePickerPlusActivity : AppCompatActivity() {
 
     private fun routeResult(uri: Uri?) {
         when {
-            uri != null && request.transformation.isNotEmpty() && !postProcessed -> {
+            uri != null && !postProcessed -> {
                 postProcessor.launch(uri)
             }
             else -> {

@@ -15,18 +15,16 @@ enum class PickSource {
 }
 
 data class TypeFilter(
+    /** Only image/ is supported at the moment, don't change default value */
     val mimeType: String = "image/*",
-    val subTypes: List<String> = listOf(), // "image/jpeg", "image/png", "image/webp"
+    /** "image/jpeg", "image/png", "image/webp" */
+    val subTypes: List<String> = listOf(),
 ) : Serializable
 
 data class ImageTransformation(
     val maxSidePx: Int = -1,
     val encodeToFormat: ImageFormat? = null,
-) : Serializable {
-
-    fun isNotEmpty() =
-        maxSidePx > 0 || encodeToFormat != null
-}
+) : Serializable
 
 enum class ImageFormat(val ext: String) {
     JPEG("jpeg"),
