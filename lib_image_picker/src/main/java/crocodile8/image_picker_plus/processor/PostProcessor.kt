@@ -81,11 +81,15 @@ internal class PostProcessor(
         }
         val ext = uri.getExt(context)
         val requiredExt = requiredFormat.ext
-        if (ext != requiredExt) {
+        if (ext != null && ext != requiredExt) {
             try {
-                val originalFIle = uri.toFile()
-                val newFile = File(originalFIle.path + ".$requiredExt")
-                originalFIle.renameTo(newFile)
+                val originalFile = uri.toFile()
+                var path = originalFile.path
+                if (path.endsWith(".$ext")) {
+                    path = path.dropLast(ext.length + 1)
+                }
+                val newFile = File("$path.$requiredExt")
+                originalFile.renameTo(newFile)
                 val finalUri = newFile.toUri()
                 Logger.d("Renamed OK: $finalUri")
                 return finalUri
