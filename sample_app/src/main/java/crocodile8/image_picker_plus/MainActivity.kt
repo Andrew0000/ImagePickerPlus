@@ -1,6 +1,5 @@
 package crocodile8.image_picker_plus
 
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +8,7 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.net.toFile
+import crocodile8.image_picker_plus.utils.BitmapUtils
 import crocodile8.image_picker_plus.utils.Logger
 
 class MainActivity : AppCompatActivity() {
@@ -21,9 +21,9 @@ class MainActivity : AppCompatActivity() {
 
     private val launcher = registerForActivityResult(StartActivityForResult()) {
         it?.data?.data?.let { uri ->
-            Log.e("IPP", "result: $uri")
+            Log.i("IPP", "result: $uri")
             // Don't use .setImageURI() in order to check access via File
-            val bitmap = BitmapFactory.decodeFile(uri.toFile().path)
+            val bitmap = BitmapUtils.decodeBitmapWithFixedRotation(uri.toFile())
             imageView1.setImageBitmap(bitmap)
         }
     }

@@ -53,7 +53,12 @@ object BitmapUtils {
         return fixImageRotation(imageFile, resized)
     }
 
-    private fun fixImageRotation(imageFile: File, bitmap: Bitmap): Bitmap {
+    fun decodeBitmapWithFixedRotation(imageFile: File): Bitmap {
+        val bitmap = BitmapFactory.decodeFile(imageFile.path)
+        return fixImageRotation(imageFile, bitmap)
+    }
+
+    fun fixImageRotation(imageFile: File, bitmap: Bitmap): Bitmap {
         val neededRotation = getNeededRotation(imageFile)
         if (neededRotation == 0f) {
             return bitmap
@@ -65,7 +70,7 @@ object BitmapUtils {
         return rotated
     }
 
-    private fun getNeededRotation(imageFile: File): Float {
+    fun getNeededRotation(imageFile: File): Float {
         val exif = ExifInterface(imageFile.absolutePath)
         val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0)
         Logger.d("orientation: $orientation")
@@ -77,7 +82,7 @@ object BitmapUtils {
         }
     }
 
-    private fun resize(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+    fun resize(image: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
         return if (maxHeight > 0 && maxWidth > 0) {
             val ratioBitmap = image.width.toFloat() / image.height.toFloat()
             val ratioMax = maxWidth.toFloat() / maxHeight.toFloat()
