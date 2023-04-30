@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.net.toFile
 import crocodile8.image_picker_plus.utils.BitmapUtils
@@ -14,6 +15,7 @@ import crocodile8.image_picker_plus.utils.Logger
 class MainActivity : AppCompatActivity() {
 
     private val imageView1 by lazy { findViewById<ImageView>(R.id.imageView1) }
+    private val tvDescription by lazy { findViewById<TextView>(R.id.tvDescription) }
     private val btnGallery by lazy { findViewById<Button>(R.id.btnGallery) }
     private val btnCamera by lazy { findViewById<Button>(R.id.btnCamera) }
     private val cbSize by lazy { findViewById<CheckBox>(R.id.cbSize) }
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             // Don't use .setImageURI() in order to check access via File
             val bitmap = BitmapUtils.decodeBitmapWithFixedRotation(uri.toFile())
             imageView1.setImageBitmap(bitmap)
+            tvDescription.text = uri.toString()
         }
     }
 
