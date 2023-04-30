@@ -36,7 +36,7 @@ internal class PostProcessor(
             val finalUri = renameFileExtIfNeeded(uri, request.transformation.encodeToFormat)
             onResult(finalUri)
         } else {
-            Logger.e("CropProcessor result error: ${it.resultCode}, uri: $uri")
+            Logger.e("PostProcessor result error: ${it.resultCode}, uri: $uri")
             onResult(null)
         }
     }
@@ -44,7 +44,7 @@ internal class PostProcessor(
     fun launch(uri: Uri) {
         val ext = uri.getExtOrJpeg(context)
         val file = FileUtils.createEmptyLocalUniqueFile(context, ext)
-        Logger.d("CropProcessor launch file: $file")
+        Logger.d("PostProcessor launch file: $file, from: $uri")
 
         if (file == null || !file.exists()) {
             Logger.e("No file")
