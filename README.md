@@ -1,6 +1,6 @@
 # Image Picker+
 
-Simple Photo picker for Android. Supports at least jpeg, png, webp formats.
+Simple Photo picker for Android. Supports jpeg, png, webp formats.
 
 ### Some functions:  
 ✔️ Pick picture from gallery without storage permission.  
@@ -14,25 +14,25 @@ Simple Photo picker for Android. Supports at least jpeg, png, webp formats.
 2. Single entry point for camera/gallery images.
 3. Other libraries that I've tried have bugs and/or abandoned.
 
-### Why not photopicker from Google (https://developer.android.com/training/data-storage/shared/photopicker)?
-This library:
+### Why not [photopicker from Google](https://developer.android.com/training/data-storage/shared/photopicker)?  
+This library:  
 1. Doesn't require Android 11 or Google Play services as photopicker from Google do.
 2. Covers both gallery and camera sources of image.
 3. Has basic image editor (rotate / crop)
 
-### Why this library doesn't require storage permissions?
-It doesn't have access to the file system of device. The system component provides content to this lib instead.
-See Intent.ACTION_OPEN_DOCUMENT for more details (https://developer.android.com/training/data-storage/shared/documents-files).
+### Why this library doesn't require storage permissions?  
+It doesn't have access to the file system of device. The system component provides content to this lib instead.  
+See [Intent.ACTION_OPEN_DOCUMENT for more details](https://developer.android.com/training/data-storage/shared/documents-files).
 
-### Why camera permission is optional?
-It vaguely described in the documentation (https://developer.android.com/reference/android/provider/MediaStore#ACTION_IMAGE_CAPTURE). 
+### Why camera permission is optional?  
+It's [vaguely mentioned in the documentation](https://developer.android.com/reference/android/provider/MediaStore#ACTION_IMAGE_CAPTURE). 
 Unless you declare the camera permission in you app's manifest, you don't need to ask for runtime permission for this library.
 If you declare the camera permission (for other features in your app), this lib will ask for runtime permission automatically.
 
 ### How rotation / crop works?
-Thanks to uCrop library: https://github.com/Yalantis/uCrop
+Thanks to [uCrop library](https://github.com/Yalantis/uCrop)
 
-### Usage:
+### Usage
 For instance in you activity:
 ```kotlin
 // You can use the modern way to receive the result like this. Or you can use onActivityResult().
