@@ -6,7 +6,7 @@ Simple Photo picker for Android. Supports jpeg, png, webp formats. Works on Andr
 ✔️ Pick picture from gallery without storage permission.  
 ✔️ Take photo from camera (camera permission is optional).  
 ✔️ Rotate or crop the captured image.  
-✔️ Save final image to app's local directory so you can use it like a File, without content resolver.  
+✔️ Save final image to app's local directory so you can use it like a File, without a ContentResolver.  
 ✔️ Transform result to Jpeg / PNG / WebP automatically if needed.  
 
 ### Why one more photo picker?
