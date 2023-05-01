@@ -33,7 +33,7 @@ If you declare the camera permission (for other features in your app), this lib 
 Thanks to [uCrop library](https://github.com/Yalantis/uCrop)
 
 ### Usage
-For instance in you activity:
+For example in your activity:
 ```kotlin
 // You can use the modern way to receive the result like this. Or you can use onActivityResult().
 private val launcher = registerForActivityResult(StartActivityForResult()) {
