@@ -1,6 +1,6 @@
 # Image Picker+
 
-Simple Photo picker for Android. Supports jpeg, png, webp formats.
+Simple Photo picker for Android. Supports jpeg, png, webp formats. Works on Android version 5 or higher.
 
 ### Some functions:  
 ✔️ Pick picture from gallery without storage permission.  
