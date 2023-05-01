@@ -14,5 +14,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ImagePickerPlus"
-include ':sample_app'
+if (!System.env.JITPACK) {
+    include ':sample_app'
+}
 include ':lib_image_picker'

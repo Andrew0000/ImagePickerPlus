@@ -30,11 +30,18 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    flavorDimensions "libDep"
+    productFlavors {
+        libDepLocal { dimension "libDep" }
+        libDepJitpack { dimension "libDep" }
+    }
 }
 
 dependencies {
 
-    implementation project(":lib_image_picker")
+    libDepLocalImplementation project(":lib_image_picker")
+    libDepJitpackImplementation 'com.github.Andrew0000:ImagePickerPlus:1.+'
 
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
