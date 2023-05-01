@@ -57,6 +57,8 @@ ImagePickerPlus
     .let { launcher.launch(it) }
 ```
 
+![picture](https://github.com/Andrew0000/ImagePickerPlus/raw/master/files/device-2023-05-01-192215.gif)
+
 ## License
 
     Licensed under the Apache License, Version 2.0 (the "License");
