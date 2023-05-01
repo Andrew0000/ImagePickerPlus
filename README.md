@@ -57,9 +57,30 @@ ImagePickerPlus
     .let { launcher.launch(it) }
 ```
 
+
 ![picture](https://github.com/Andrew0000/ImagePickerPlus/raw/master/files/device-2023-05-01-193102.gif)
 
-## License
+
+### Setup:  
+
+[![](https://jitpack.io/v/Andrew0000/ImagePickerPlus.svg)](https://jitpack.io/#Andrew0000/ImagePickerPlus)
+
+1. Add `maven { url 'https://jitpack.io' }` to the `allprojects` or `dependencyResolutionManagement` section in top-level `build.gradle` or `settings.gradle`.  
+For example (`settings.gradle`):
+```
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+2. Add `implementation 'com.github.Andrew0000:ImagePickerPlus:$latest_version'` to the module-level `build.gradle`  
+
+
+### License
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
