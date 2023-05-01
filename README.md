@@ -57,7 +57,7 @@ ImagePickerPlus
     .let { launcher.launch(it) }
 ```
 
-![picture](https://github.com/Andrew0000/ImagePickerPlus/raw/master/files/device-2023-05-01-192215.gif)
+![picture](https://github.com/Andrew0000/ImagePickerPlus/raw/master/files/device-2023-05-01-193102.gif)
 
 ## License
 
