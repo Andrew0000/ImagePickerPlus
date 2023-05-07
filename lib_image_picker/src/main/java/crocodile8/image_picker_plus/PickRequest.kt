@@ -18,7 +18,7 @@ data class TypeFilter(
     /** Only image/ is supported at the moment, don't change default value */
     val mimeType: String = "image/*",
     /** "image/jpeg", "image/png", "image/webp" */
-    val subTypes: List<String> = listOf(),
+    val subTypes: List<String> = listOf("image/jpeg", "image/png", "image/webp"),
 ) : Serializable
 
 data class ImageTransformation(
