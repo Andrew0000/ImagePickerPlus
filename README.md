@@ -57,6 +57,7 @@ ImagePickerPlus
     .let { launcher.launch(it) }
 ```
 
+Sample application:  
 
 ![picture](https://github.com/Andrew0000/ImagePickerPlus/raw/master/files/device-2023-05-01-193102.gif)
 
