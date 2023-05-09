@@ -28,6 +28,13 @@
             android:layout_marginBottom="8dp"
             android:text="Camera" />
 
+        <Button
+            android:id="@+id/btnGooglePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Google Photo Picker" />
+
         <CheckBox
             android:id="@+id/cbSize"
             android:layout_width="wrap_content"

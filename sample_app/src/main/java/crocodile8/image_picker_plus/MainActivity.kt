@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.net.toFile
 import crocodile8.image_picker_plus.utils.BitmapUtils
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val tvDescription by lazy { findViewById<TextView>(R.id.tvDescription) }
     private val btnGallery by lazy { findViewById<Button>(R.id.btnGallery) }
     private val btnCamera by lazy { findViewById<Button>(R.id.btnCamera) }
+    private val btnGooglePicker by lazy { findViewById<Button>(R.id.btnGooglePicker) }
     private val cbSize by lazy { findViewById<CheckBox>(R.id.cbSize) }
     private val cbForceWebP by lazy { findViewById<CheckBox>(R.id.cbForceWebP) }
 
@@ -28,6 +31,13 @@ class MainActivity : AppCompatActivity() {
             val bitmap = BitmapUtils.decodeBitmapWithFixedRotation(uri.toFile())
             imageView1.setImageBitmap(bitmap)
             tvDescription.text = uri.toString()
+        }
+    }
+
+    // https://developer.android.com/training/data-storage/shared/photopicker
+    private val pickMedia = registerForActivityResult(PickVisualMedia()) { uri ->
+        if (uri != null) {
+            imageView1.setImageURI(uri)
         }
     }
 
@@ -54,6 +64,10 @@ class MainActivity : AppCompatActivity() {
                     transformation = getTransformation(),
                 )
             ).let { launcher.launch(it) }
+        }
+
+        btnGooglePicker.setOnClickListener {
+            pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
         }
     }
 
