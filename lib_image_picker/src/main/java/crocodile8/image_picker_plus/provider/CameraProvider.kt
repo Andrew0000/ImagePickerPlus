@@ -111,7 +111,30 @@ class CameraProvider(
         val authority = context.packageName + context.getString(R.string.file_provider_name)
         val photoURI = FileProvider.getUriForFile(context, authority, file)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        grantPermissionsToMatchingActivities(intent, photoURI)
+
         return intent
+    }
+
+    private fun grantPermissionsToMatchingActivities(intent: Intent, fileUri: Uri) {
+        try {
+            val matchingActivitiesInfo = context.packageManager
+                .queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+
+            for (info in matchingActivitiesInfo) {
+                val packageName = info.activityInfo.packageName
+                context.grantUriPermission(
+                    packageName,
+                    fileUri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+                Logger.d("CameraProvider grant permission to: $packageName")
+            }
+        } catch (e: Exception) {
+            Logger.e("CameraProvider grant permission", e)
+        }
     }
 
     companion object {
