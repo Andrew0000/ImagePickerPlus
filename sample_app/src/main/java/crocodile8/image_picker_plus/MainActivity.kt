@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val btnGooglePicker by lazy { findViewById<Button>(R.id.btnGooglePicker) }
     private val cbSize by lazy { findViewById<CheckBox>(R.id.cbSize) }
     private val cbForceWebP by lazy { findViewById<CheckBox>(R.id.cbForceWebP) }
+    private val cb1to1 by lazy { findViewById<CheckBox>(R.id.cb1to1) }
 
     private val launcher = registerForActivityResult(StartActivityForResult()) {
         it?.data?.data?.let { uri ->
@@ -80,6 +81,11 @@ class MainActivity : AppCompatActivity() {
             },
             encodeToFormat = if (cbForceWebP.isChecked) {
                 ImageFormat.WEBP
+            } else {
+                null
+            },
+            strictAspectRatio = if (cb1to1.isChecked) {
+                AspectRatioIPP("1:1", 1f, 1f)
             } else {
                 null
             },

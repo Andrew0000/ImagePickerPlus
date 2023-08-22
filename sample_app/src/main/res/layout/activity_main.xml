@@ -47,6 +47,12 @@
             android:layout_height="wrap_content"
             android:text="Force to WebP"/>
 
+        <CheckBox
+            android:id="@+id/cb1to1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Force 1:1"/>
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="200dp"

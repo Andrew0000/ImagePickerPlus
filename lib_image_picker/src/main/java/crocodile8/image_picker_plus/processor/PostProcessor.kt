@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.core.net.toFile
 import androidx.core.net.toUri
 import com.yalantis.ucrop.UCrop
+import com.yalantis.ucrop.model.AspectRatio
 import crocodile8.image_picker_plus.ImageFormat
 import crocodile8.image_picker_plus.PickRequest
 import crocodile8.image_picker_plus.utils.ImageFormatUtils
@@ -58,6 +59,7 @@ internal class PostProcessor(
             .withOptions(
                 UCrop.Options().apply {
                     applyFormatRestriction(ext)
+                    applyAspectRatioRestriction()
                 }
             )
 
@@ -79,6 +81,15 @@ internal class PostProcessor(
             setCompressionFormat(encodeToFormat.toCompressFormat())
         } else {
             setCompressionFormat(ImageFormatUtils.getCompressFormat(ext))
+        }
+    }
+
+    private fun UCrop.Options.applyAspectRatioRestriction() {
+        request.transformation.strictAspectRatio?.let { ratio ->
+            setAspectRatioOptions(
+                0,
+                AspectRatio(ratio.title, ratio.x, ratio.y),
+            )
         }
     }
 

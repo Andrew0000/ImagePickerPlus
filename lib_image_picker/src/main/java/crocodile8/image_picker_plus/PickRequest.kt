@@ -24,6 +24,13 @@ data class TypeFilter(
 data class ImageTransformation(
     val maxSidePx: Int = -1,
     val encodeToFormat: ImageFormat? = null,
+    val strictAspectRatio: AspectRatioIPP? = null,
+) : Serializable
+
+data class AspectRatioIPP(
+    val title: String,
+    val x: Float,
+    val y: Float,
 ) : Serializable
 
 enum class ImageFormat(val ext: String) {
