@@ -16,7 +16,7 @@ Simple Photo picker for Android. Supports jpeg, png, webp formats. Works on Andr
 
 ### Why not [photopicker from Google](https://developer.android.com/training/data-storage/shared/photopicker)?  
 This library:  
-1. Doesn't require Android 11 or Google Play services as photopicker from Google do.
+1. Doesn't require Android 11 or Google Play services as the photopicker from Google does.
 2. Covers both gallery and camera sources of image.
 3. Has basic image editor (rotate / crop)
 
