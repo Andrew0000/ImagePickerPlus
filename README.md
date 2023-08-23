@@ -1,12 +1,12 @@
 # Image Picker+
 
-Simple Photo picker for Android. Supports jpeg, png, webp formats. Works on Android version 5 or higher.
+Simple Photo Picker for Android. Supports jpeg, png, webp formats. Works on Android version 5 or higher.
 
 ### Some functions:  
-✔️ Pick picture from gallery without storage permission.  
-✔️ Take photo from camera (camera permission is optional).  
+✔️ Pick a picture from the gallery without storage permission.  
+✔️ Take a photo from the camera (camera permission is optional).  
 ✔️ Rotate or crop the captured image.  
-✔️ Save final image to app's local directory so you can use it like a File, without a ContentResolver.  
+✔️ Save the final image to the app's local directory so you can use it like a File, without a ContentResolver.  
 ✔️ Transform result to Jpeg / PNG / WebP automatically if needed.  
 
 ### Why one more photo picker?
@@ -21,12 +21,12 @@ This library:
 3. Has basic image editor (rotate / crop)
 
 ### Why this library doesn't require storage permissions?  
-It doesn't have access to the file system of device. The system component provides content to this lib instead.  
+It doesn't have access to the file system of the device. The system component provides content to this lib instead.  
 See [Intent.ACTION_OPEN_DOCUMENT for more details](https://developer.android.com/training/data-storage/shared/documents-files).
 
 ### Why camera permission is optional?  
 It's [vaguely mentioned in the documentation](https://developer.android.com/reference/android/provider/MediaStore#ACTION_IMAGE_CAPTURE). 
-Unless you declare the camera permission in you app's manifest, you don't need to ask for runtime permission for this library.
+Unless you declare the camera permission in your app's manifest, you don't need to ask for runtime permission for this library.
 If you declare the camera permission (for other features in your app), this lib will ask for runtime permission automatically.
 
 ### How rotation / crop works?
