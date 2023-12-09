@@ -50,7 +50,7 @@ ImagePickerPlus
             source = PickSource.GALLERY, // or PickSource.CAMERA
             transformation = ImageTransformation(
                 maxSidePx = 1024, // Or -1 if limit isn't needed
-                encodeToFormat = ImageFormat.JPEG, // Or null is transformation isn't needed
+                encodeToFormat = ImageFormat.JPEG, // Or null if transformation isn't needed
             ),
         )
     )
